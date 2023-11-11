@@ -8,7 +8,7 @@ app.get("/", (req,res) =>{
     res.send("<h1>Yeah!</h1>");
 });
 
-const port = process.env.PORT ;
+const port = process.env.PORT;
 app.listen(port, () =>{
     console.log(`Server is running at port ${port}`);
 })
