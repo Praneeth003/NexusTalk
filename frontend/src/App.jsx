@@ -1,17 +1,16 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom"; 
-import Home from "./components/Home";
-import Chat from "./components/Chat";
+import { Route, Routes} from "react-router-dom"; 
+import Home from "./components/Home.jsx";
+import Chat from "./components/Chat.jsx";
 
 function App(){
-  return(
+  return(  
     <div>
     <Routes>
-        <Route path="/" element = {<Home />} />
-        <Route path="/chats" element={<Chat />} />
-        </Routes>
-    </div>
-        
+        <Route path="/" exact element = {<Home />} />
+        <Route path="/chat" exact element={<Chat />} />
+    </Routes>
+    </div>   
   )
 
 }
