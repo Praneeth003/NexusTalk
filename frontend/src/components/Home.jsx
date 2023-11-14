@@ -1,5 +1,7 @@
 import React from "react";
-import { Container, Box, Text} from "@chakra-ui/react";
+import { Container, Box, Text, Tabs, TabList, TabPanels, Tab, TabPanel} from "@chakra-ui/react";
+import SignIn from "./Authentication/SignIn";
+import SignUp from "./Authentication/SignUp";
 
 function Home(){
     return(
@@ -15,6 +17,28 @@ function Home(){
             borderWidth = "1px"
             >
                 <Text fontSize="4xl" color = "black" textAlign="center">NexusTalk</Text>
+            </Box>
+            <Box
+            p = {4}
+            bg = "white"
+            w = "100%"
+            borderRadius = "1g"
+            borderWidth = "1px"
+            >
+            <Tabs size='md' variant='enclosed'>
+                <TabList>
+                    <Tab>Sign In</Tab>
+                    <Tab>Sign Up</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel>
+                    <SignIn/>
+                    </TabPanel>
+                    <TabPanel>
+                    <SignUp/>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
             </Box>
         </Container>
     );
