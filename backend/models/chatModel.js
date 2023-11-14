@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const chatModel = mongoose.Schema(
+const chatSchema = mongoose.Schema(
     {
         chatName:{
             type: String, 
