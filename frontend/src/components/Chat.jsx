@@ -21,9 +21,9 @@ function Chat(){
   
    return (
     <div>
-    {chatData.map(i => (
-        <div key = {i._id} > {i.chatName} </div>
-    ))
+    {chatData.map(i => {
+        return <div key = {i._id} > {i.chatName} </div>}
+    )
     }
     </div>
 );
