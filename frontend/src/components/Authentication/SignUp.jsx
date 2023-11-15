@@ -6,6 +6,8 @@ function SignUp(){
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
+        profilePicture: "",
         
     })
 
@@ -23,6 +25,15 @@ function SignUp(){
 
     function handleClick(){
         setShowPassword(!showPassword);
+    }
+
+    function handleFileChange(event){
+        const firstFile = event.target.files[0];
+        //Implement later
+    }
+
+    function onSubmit(event){
+        //Implement later
     }
         
 
@@ -46,7 +57,7 @@ function SignUp(){
                         type={showPassword ? "text" : "password"}
                     /> 
                     <InputRightElement>
-                        <Button onClick = {handleClick} size ="sm" colorScheme='gray' >{showPassword ? "Hide" : "Show"}</Button>
+                        <Button onClick = {handleClick} size ="sm" colorScheme='gray' variant='outline' >{showPassword ? "Hide" : "Show"}</Button>
                     </InputRightElement>  
                     </InputGroup>
             </FormControl>
@@ -54,14 +65,23 @@ function SignUp(){
             <FormControl isRequired>
                 <FormLabel>Confirm Password</FormLabel>
                     <InputGroup>
-                    <Input name =" confirmPassword" placeholder = "Confirm Password" value = {state.confirmPassword} onChange = {recordInput} 
+                    <Input name = "confirmPassword" placeholder = "Confirm Password" value = {state.confirmPassword} onChange = {recordInput} 
                         type={showPassword ? "text" : "password"}
                     /> 
                     <InputRightElement>
-                        <Button onClick = {handleClick} size ="sm" colorScheme='gray'>{showPassword ? "Hide" : "Show"}</Button>
+                        <Button onClick = {handleClick} size ="sm" colorScheme='gray' variant='outline'>{showPassword ? "Hide" : "Show"}</Button>
                     </InputRightElement>  
                     </InputGroup>
             </FormControl>
+
+            <FormControl>
+                <FormLabel>Profile Picture </FormLabel>
+                <Input type = "file" accept = "image/*" onChange = {handleFileChange} name = "profilePicture"></Input>
+            </FormControl>
+
+            <Button colorScheme = 'blue' width = "100%" onClick = {onSubmit} mt = {5} >
+            Sign Up
+            </Button>
 
         </vStack>
     );

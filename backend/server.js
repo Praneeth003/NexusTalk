@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import  chats from "./data/dummydata.js";
-// import cors from "cors";
+import cors from "cors";
 
 
 const app = express();
 dotenv.config();
 
-// app.use(cors());
+app.use(cors());
 
 
 
