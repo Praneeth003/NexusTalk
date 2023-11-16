@@ -5,7 +5,6 @@ function SignIn(){
     const [state, setState] = useState({
         email: "",
         password: "",
-
     })
 
     const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +26,6 @@ function SignIn(){
     function onSubmit(event){
         //Implement later
     }
-        
 
     return(
         <vStack>
