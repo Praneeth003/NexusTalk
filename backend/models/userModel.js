@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password:{
         type: String,
@@ -15,7 +16,7 @@ const userSchema = mongoose.Schema({
     },
     profilepic:{
         type: String,
-        default: String
+        default: "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
     }
 },
 {timeStamps: true}
