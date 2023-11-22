@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js"; 
 import cors from "cors";
 import connectDB from "./config/db.js";
-
+import {notFound, errorHandler} from "./middleware/errorMiddleware.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -19,6 +19,9 @@ app.get("/", (req,res) =>{
 });
 
 app.use('/api/user', userRoutes)
+
+app.use(notFound);
+app.use(errorHandler); 
 
 const port = process.env.PORT;
 app.listen(port, () =>{
