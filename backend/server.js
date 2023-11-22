@@ -8,6 +8,9 @@ dotenv.config();
 connectDB();
 const app = express();
 
+//Middleware to parse incoming JSON data
+app.use(express.json());
+
 app.use(cors());
 
 

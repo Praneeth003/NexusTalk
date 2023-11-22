@@ -1,16 +1,17 @@
-import User from "../models/userModel"
+import User from "../models/userModel.js";
+import generateToken from "../config/generateToken.js";
 
 async function registerUser(req,res){
-    const {name, email, password} = req.body;
+    const {name, email, password, profilepic} = req.body;
     if(!name || !email || !password){
         res.status(400);
-        throw new error("Please enter all the required fields");
+        throw new Error("Please enter all the required fields");
     }
 
     const userExists = await User.findOne({email});
     if(userExists){
         res.status(400);
-        throw new error("User already exists");
+        throw new Error("User already exists");
     }
 
     const user = await User.create({
@@ -25,6 +26,8 @@ async function registerUser(req,res){
             name: user.name,
             email: user.email,
             profilepic: user.profilepic,
+            token: generateToken(user.id),
+
         });
     }else{
         res.status(400);
