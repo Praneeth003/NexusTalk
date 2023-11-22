@@ -22,18 +22,33 @@ async function registerUser(req,res){
     });
     if(user){
         res.status(201).json({
-            id: user.id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             profilepic: user.profilepic,
-            token: generateToken(user.id),
-
+            token: generateToken(user._id),
         });
     }else{
         res.status(400);
-        throw("Failed to create user");
+        throw new Error("Failed to create user");
     }
+}
 
+async function authUser(req,res){
+    const {email, password} = req.body;
+    const user = await User.findOne({email});
+    if(user && (await user.matchPassword(password))){
+         res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profilepic: user.profilepic,
+            token: generateToken(user._id),
+        });
+    }else{
+        res.status(400);
+        throw new Error("Incorrect email or password");
     }
+}
 
-export default registerUser;
+export {registerUser, authUser};
