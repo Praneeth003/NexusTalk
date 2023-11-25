@@ -32,7 +32,6 @@ function SignUp(){
     }
 
     async function onSubmit(event){
-        //Warn to let the user fill all the details
         const { name, email, password, confirmPassword, profilePicture } = state;
         event.preventDefault();
         if(!name || !email || !password || !confirmPassword){

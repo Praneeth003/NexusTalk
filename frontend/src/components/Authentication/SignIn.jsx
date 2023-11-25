@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import {FormControl, FormLabel, Input, Button, InputRightElement, InputGroup} from "@chakra-ui/react";
+import {FormControl, FormLabel, Input, Button, InputRightElement, InputGroup, useToast} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignIn(){
     const [state, setState] = useState({
         email: "",
         password: "",
     })
+    const toast = useToast();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -23,8 +27,45 @@ function SignIn(){
         setShowPassword(!showPassword);
     }
 
-    function onSubmit(event){
-        //Implement later
+    async function onSubmit(event){
+        const {email, password} = state;
+        if(!email || !password){
+            toast({
+                title: "Please fill all the fields!",
+                status: "warning",
+                duration: "6000",
+                position: "bottom",
+                isClosabale: "true" 
+            });
+        }
+        try{
+            const config ={
+                headers:{
+                    "Content-type": "application/json",
+                },
+            };
+            const {data} = await axios.post(
+                "api/user/login", {email,password}, config
+            );
+            toast({
+                title: "Logged In Successfully!",
+                position: "bottom",
+                duration: 6000,
+                isClosable: true,
+                status: "success"
+            });
+            navigate('/Chat');
+        }catch(error){
+            console.log(error);
+            toast({
+                title: "Error Occured",
+                status: "error",
+                duration: 6000,
+                isClosable: true,
+                position: "bottom",
+            });
+        }
+
     }
 
     return(
