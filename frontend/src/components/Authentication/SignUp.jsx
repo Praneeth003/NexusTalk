@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import {FormControl, FormLabel, vStack, Input, InputRightElement, InputGroup, Button} from "@chakra-ui/react";
+import {FormControl, FormLabel, vStack, Input, InputRightElement, InputGroup, Button, useToast} from "@chakra-ui/react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp(){
     const [state, setState] = useState({
@@ -9,9 +11,11 @@ function SignUp(){
         confirmPassword: "",
         profilePicture: "",
         
-    })
+    });
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const toast = useToast();
 
     function recordInput(event){
         const {name, value} = event.target;
@@ -27,13 +31,56 @@ function SignUp(){
         setShowPassword(!showPassword);
     }
 
-    function handleFileChange(event){
-        const firstFile = event.target.files[0];
-        //Implement later
-    }
+    
 
-    function onSubmit(event){
-        //Implement later
+    async function onSubmit(event){
+        //Warn to let the user fill all the details
+        const { name, email, password, confirmPassword, profilePicture } = state;
+        event.preventDefault();
+        if(!name || !email || !password || !confirmPassword){
+            toast({
+                title: "Please fill all the fields!",
+                status: "warning",
+                duration: "6000",
+                position: "bottom",
+                isClosabale: "true" 
+            });
+        }
+        if(password !== confirmPassword){
+            toast({
+                title: "Passwords do not match!",
+                status: "error",
+                duration: "6000",
+                position: "bottom",
+                isClosabale: "true" 
+            });
+        }
+        try{
+            const config ={
+                headers:{
+                    "Content-type": "application/json",   
+                },
+            };
+            await axios.post("api/user", {name, email, password, profilePicture},
+            config);
+            toast({
+                title: "Registration is Successful!",
+                position: "bottom",
+                duration: 6000,
+                isClosable: true,
+                status: "success"
+            });
+            navigate('/Chat');
+        }catch(error){
+            console.log(error);
+            toast({
+                title: "Error Occured",
+                status: "error",
+                duration: 6000,
+                isClosable: true,
+                position: "bottom",
+            });
+        }
     }
         
 
@@ -76,7 +123,7 @@ function SignUp(){
 
             <FormControl>
                 <FormLabel>Profile Picture </FormLabel>
-                <Input type = "file" accept = "image/*" onChange = {handleFileChange} name = "profilePicture"></Input>
+                <Input type = "file" accept = "image/*" onChange = {recordInput} name = "profilePicture"></Input>
             </FormControl>
 
             <Button colorScheme = 'blue' width = "100%" onClick = {onSubmit} mt = {5} >
