@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import generateToken from "../config/generateToken.js";
 
+
 async function registerUser(req,res){
     const {name, email, password, profilepic} = req.body;
     if(!name || !email || !password){
@@ -50,5 +51,18 @@ async function authUser(req,res){
         throw new Error("Incorrect email or password");
     }
 }
+// We can search either by name or email
+const allUsers = async(req,res) => {
+    const keyword = req.query.search
+    ? {
+        $or: [
+            {name: {$regex: req.query.search, $options: "i"}},
+            {email: {$regex: req.query.search, $options: "i"}},
+        ],
+    }
+    : {};
+   const users = await User.find(keyword); 
+   res.send(users);
+};
 
-export {registerUser, authUser};
+export {registerUser, authUser, allUsers};

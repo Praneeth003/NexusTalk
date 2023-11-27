@@ -13,11 +13,6 @@ app.use(express.json());
 
 app.use(cors());
 
-
-app.get("/", (req,res) =>{
-    res.send("<h1>Yeah!</h1>");
-});
-
 app.use('/api/user', userRoutes)
 
 app.use(notFound);
