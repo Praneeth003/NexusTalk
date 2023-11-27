@@ -61,7 +61,7 @@ const allUsers = async(req,res) => {
         ],
     }
     : {};
-   const users = await User.find(keyword); 
+   const users = await User.find(keyword).find({_id: {$ne: req.user_id}}); 
    res.send(users);
 };
 
