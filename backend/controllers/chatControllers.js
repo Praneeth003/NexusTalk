@@ -85,7 +85,20 @@ const createGroupChat = asyncHandler(async(req,res) =>{
     }
 });
 
+const renameGroupChat = asyncHandler(async(req,res) =>{
+    if(!req.body.chatId || !req.body.name){
+        console.log("ChatId and name params are required");
+        return res.sendStatus(400).send({message: "ChatId and name params are required"});
+    }
+    try{
+        const chat = await Chat.findOneAndUpdate({_id: req.body.chatId}, {chatName: req.body.name}, {new: true}).populate("users", "-password").populate("latestMessage").populate("groupAdmin", "-password");
+        res.status(200).send(chat);
+    }catch(error){
+        res.status(400);
+        throw new Error(error.message);
+    }
+});
 
 
 
-export {accessChat, fetchChats, createGroupChat};
+export {accessChat, fetchChats, createGroupChat, renameGroupChat};
