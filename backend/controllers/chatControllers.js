@@ -56,4 +56,36 @@ const fetchChats = asyncHandler(async(req,res) =>{
     }
 });
 
-export {accessChat, fetchChats};
+const createGroupChat = asyncHandler(async(req,res) =>{
+    if(!req.body.users || !req.body.name){
+        console.log("Users and name params are required");
+        return res.sendStatus(400).send({message: "Users and group name are required"});
+    }
+    var users = JSON.parse(req.body.users);
+    if(users.length < 2){
+        console.log("Group chat must have atleast 2 users");
+        return res.sendStatus(400).send({message: "Group chat must have atleast 2 users"});
+    }
+    // Add the logged in user as well to the group
+    users.push(req.user._id);
+
+    try{
+        const groupChat = await Chat.create({
+            chatName: req.body.name,
+            isGroupChat: true,
+            users: users,
+            groupAdmin: req.user._id
+        });
+        const fullChat = await Chat.findOne({_id: groupChat._id}).populate("users", "-password").populate("latestMessage").populate("groupAdmin", "-password");
+        res.status(200).send(fullChat);
+    }
+    catch(error){
+        res.status(400);
+        throw new Error(error.message);
+    }
+});
+
+
+
+
+export {accessChat, fetchChats, createGroupChat};
