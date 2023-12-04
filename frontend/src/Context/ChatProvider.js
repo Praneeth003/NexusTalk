@@ -1,11 +1,11 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const ChatContext = createContext();
  
 const ChatProvider =({children}) => {
     const [user, setUser] = useState();
-    const history = useHistory();
+    const navigate = useNavigate();
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser){
@@ -13,9 +13,9 @@ const ChatProvider =({children}) => {
             setUser(foundUser);
         }
         if(!loggedInUser){
-            history.push("/");
+            navigate("/");
         }
-    }, [history]);
+    }, [navigate]);
 
     return (
         <ChatContext.Provider value = {{user, setUser}}>
@@ -24,7 +24,7 @@ const ChatProvider =({children}) => {
     );
 };
 
-export const chatState = () =>{
+export const ChatState = () =>{
     return useContext(ChatContext);
 }
 
