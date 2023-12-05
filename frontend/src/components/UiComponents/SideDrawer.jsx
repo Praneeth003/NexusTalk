@@ -1,11 +1,13 @@
 import React from 'react';
+import { Tooltip } from '@chakra-ui/react';
+import useState from 'react';
 
 const SideDrawer = () => {
-  return (
-    <div className="side-drawer">
-      {/* Your content goes here */}
-    </div>
-  );
+ 
+      const [search, setSearch] = useState("");
+      const [searchResult, setSearchResult] = useState([]);
+
+ 
 };
 
 export default SideDrawer;

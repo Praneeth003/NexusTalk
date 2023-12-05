@@ -3,6 +3,8 @@ import {FormControl, FormLabel, vStack, Input, InputRightElement, InputGroup, Bu
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.baseURL = "http://localhost:4000";
+
 function SignUp(){
     const [state, setState] = useState({
         name: "",
@@ -58,8 +60,9 @@ function SignUp(){
                     "Content-type": "application/json",   
                 },
             };
-            await axios.post("api/user", {name, email, password, profilePicture},
+            const {data} = await axios.post("/api/user", {name, email, password, profilePicture},
             config);
+            localStorage.setItem("userInfo", JSON.stringify(data));
             toast({
                 title: "Registration is Successful!",
                 position: "bottom",
@@ -67,7 +70,7 @@ function SignUp(){
                 isClosable: true,
                 status: "success"
             });
-            navigate('/Chat');
+            navigate('/chat');
         }catch(error){
             console.log(error);
             toast({

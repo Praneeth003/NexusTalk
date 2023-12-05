@@ -8,7 +8,7 @@ import { useEffect } from "react";
 function Home(){
     const navigate = useNavigate();
     useEffect(() => {
-        const loggedInUser = JSON.parse(localStorage.getItem("user"));
+        const loggedInUser = JSON.parse(localStorage.getItem("userInfo"));
         if (loggedInUser){
             navigate("/chat");
         }

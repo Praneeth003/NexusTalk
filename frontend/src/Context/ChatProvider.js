@@ -7,7 +7,7 @@ const ChatProvider =({children}) => {
     const [user, setUser] = useState();
     const navigate = useNavigate();
     useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
+        const loggedInUser = localStorage.getItem("userInfo");
         if (loggedInUser){
             const foundUser = JSON.parse(loggedInUser);
             setUser(foundUser);

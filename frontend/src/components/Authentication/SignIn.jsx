@@ -3,6 +3,8 @@ import {FormControl, FormLabel, Input, Button, InputRightElement, InputGroup, us
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:4000";
+
 function SignIn(){
     const [state, setState] = useState({
         email: "",
@@ -45,8 +47,9 @@ function SignIn(){
                 },
             };
             const {data} = await axios.post(
-                "api/user/login", {email,password}, config
+                "/api/user/login", {email,password}, config
             );
+            localStorage.setItem("userInfo", JSON.stringify(data));
             toast({
                 title: "Logged In Successfully!",
                 position: "bottom",
@@ -54,7 +57,7 @@ function SignIn(){
                 isClosable: true,
                 status: "success"
             });
-            navigate('/Chat');
+            navigate('/chat');
         }catch(error){
             console.log(error);
             toast({

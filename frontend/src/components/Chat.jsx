@@ -14,7 +14,7 @@ function Chat(){
    return (
     <div style={{width: "100%"}}>
     {user && <SideDrawer />}
-    <Box d = "flex" justifyContent = "center" alignItems = "center" h = "100vh">
+    <Box d = "flex" justifyContent = "space-between" alignItems = "center" h = "95vh">
     {user && <MyChats />}
     {user && <ChatBox />}
     </Box>
