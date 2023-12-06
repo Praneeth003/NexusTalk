@@ -8,10 +8,9 @@ const ChatProvider =({children}) => {
     const navigate = useNavigate();
     useEffect(() => {
         const loggedInUser = localStorage.getItem("userInfo");
-        if (loggedInUser){
-            const foundUser = JSON.parse(loggedInUser);
-            setUser(foundUser);
-        }
+        const foundUser = JSON.parse(loggedInUser);
+        setUser(foundUser);
+        
         if(!loggedInUser){
             navigate("/");
         }
