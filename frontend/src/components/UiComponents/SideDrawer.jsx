@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Box, Input, InputGroup, InputLeftElement, Text, Tooltip, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { Avatar, Button, Box, Input, Text, Tooltip, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { SearchIcon, BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import ProfileModal from '../Other/profielModal';
 import { ChatState } from '../../Context/ChatProvider';
 import {useNavigate } from 'react-router-dom';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import axios from 'axios';
+import UserListItem from '../Other/UserListItem';
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
 } from '@chakra-ui/react';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]); 
-  const {user} = ChatState();
+
+  const {user, setSelectedChat, chatList, setChatList} = ChatState();
+
   const {isOpen, onOpen, onClose} = useDisclosure();
   const navigate = useNavigate();
   const toast = useToast();
@@ -40,7 +41,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/users/search/${search}`, config);
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
       setSearchResult(data);
     }catch(error){
       toast({
@@ -59,11 +60,26 @@ const SideDrawer = () => {
     navigate("/");
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch(); // Trigger search when Enter key is pressed
-    }
-  };
+  const accessChat = (UserId) => {
+    try{
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const {data} = axios.post('/api/chat', {UserId}, config);
+      setSelectedChat(data);
+      onClose();
+  }
+  catch(error){
+    toast({
+      title: "Error in accessing chat",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+      position: "top-left"
+    });
+  }}
 
   return (
     <>
@@ -81,8 +97,8 @@ const SideDrawer = () => {
       </Button>
     </Tooltip>
 
+    <Text p = "0" b ="0" m = "0" fontSize="3xl" color = "black" textAlign="center">NexusTalk</Text>
 
-    <Text p = "0" b ="0" m = "0" fontSize="2xl" color = "black" textAlign="center">NexusTalk</Text>
     <div>
     <Menu>
       <MenuButton>
@@ -111,8 +127,15 @@ const SideDrawer = () => {
       <Input placeholder = "Search by Name or Email" value = {search} onChange={(event) => setSearch(event.target.value)} />
       <Button onClick={handleSearch}>Search</Button>
     </Box>
-      
 
+    {searchResult?.map(user => (
+      <UserListItem
+      key = {user._id}
+      user = {user}
+      handleFunction={() => accessChat(user._id)}
+      />
+    ))}
+    
     </DrawerBody>
     </DrawerContent>
     </Drawer>
