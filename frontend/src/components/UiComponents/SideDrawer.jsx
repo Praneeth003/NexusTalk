@@ -34,6 +34,7 @@ const SideDrawer = () => {
         isClosable: true,
         position: "top-left"
       });
+      return;
     }
     try{
       const config = {
@@ -42,6 +43,7 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
+      console.log(data);
       setSearchResult(data);
     }catch(error){
       toast({
@@ -61,13 +63,21 @@ const SideDrawer = () => {
   };
 
   const accessChat = (UserId) => {
+    console.log(UserId);
     try{
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const {data} = axios.post('/api/chat', {UserId}, config);
+      const {data} = axios.post(`/api/chat`, {UserId}, config);
+      console.log(data);
+      
+      const chatExists = chatList.find((chat) => chat._id === data._id);
+      if(!chatExists){
+        setChatList((prevState) => [...prevState, data]);
+      }
+
       setSelectedChat(data);
       onClose();
   }
@@ -128,7 +138,7 @@ const SideDrawer = () => {
       <Button onClick={handleSearch}>Search</Button>
     </Box>
 
-    {searchResult?.map(user => (
+    {searchResult?.map((user) => (
       <UserListItem
       key = {user._id}
       user = {user}

@@ -4,9 +4,12 @@ import {useNavigate} from "react-router-dom";
 const ChatContext = createContext();
  
 const ChatProvider =({children}) => {
+    // user is for storing the logged in user
     const [user, setUser] = useState();
+    // selectedChat is for storing the selected chat of the logged in user
     const [selectedChat, setSelectedChat] = useState();
-    const [chatList, setChatList] = useState();
+    // chatList is for storing all the chat list of the logged in user
+    const [chatList, setChatList] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         const loggedInUser = localStorage.getItem("userInfo");
