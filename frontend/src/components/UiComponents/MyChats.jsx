@@ -38,9 +38,10 @@ const MyChats = () => {
   },[]);
 
   return (
-    <div>
-      {/* Your component code here */}
-    </div>
+    <Box>
+      
+
+    </Box>
   );
 };
 

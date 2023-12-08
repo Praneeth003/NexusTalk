@@ -1,8 +1,8 @@
 import React from 'react';
 import { Avatar, Box, Text } from '@chakra-ui/react';
 
-
-const UserListItem = ({ user, handleFunction }) => {
+// This component is used in the SideDrawer component to display cards for the users that are searched for
+const UserListItem = ({ i, handleFunction }) => {
 
   return (
     <Box
@@ -26,14 +26,14 @@ const UserListItem = ({ user, handleFunction }) => {
         mr={2}
         size="sm"
         cursor="pointer"
-        name={user.name}
-        src={user.pic}
+        name={i.name}
+        src={i.profilepic}
       />
       <Box>
-        <Text>{user.name}</Text>
+        <Text>{i.name}</Text>
         <Text fontSize="xs">
           <b>Email : </b>
-          {user.email}
+          {i.email}
         </Text>
       </Box>
     </Box>

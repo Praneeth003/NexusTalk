@@ -62,17 +62,18 @@ const SideDrawer = () => {
     navigate("/");
   };
 
-  const accessChat = (UserId) => {
-    console.log(UserId);
+  const accessChat = (userId) => {
+    console.log(userId);
     try{
       const config = {
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const {data} = axios.post(`/api/chat`, {UserId}, config);
+      const {data} = axios.post(`/api/chat`, {userId}, config);
       console.log(data);
-      
+
       const chatExists = chatList.find((chat) => chat._id === data._id);
       if(!chatExists){
         setChatList((prevState) => [...prevState, data]);
@@ -138,11 +139,11 @@ const SideDrawer = () => {
       <Button onClick={handleSearch}>Search</Button>
     </Box>
 
-    {searchResult?.map((user) => (
+    {searchResult?.map((i) => (
       <UserListItem
-      key = {user._id}
-      user = {user}
-      handleFunction={() => accessChat(user._id)}
+      key = {i._id}
+      i = {i}
+      handleFunction={() => accessChat(i._id)}
       />
     ))}
     
