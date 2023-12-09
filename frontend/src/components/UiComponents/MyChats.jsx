@@ -8,7 +8,7 @@ import { getSender } from '../../logic';
 import { AddIcon } from '@chakra-ui/icons';
 import GroupChatModal from '../Other/GroupChatModal';
 
-const MyChats = (fetchAgain) => {
+const MyChats = ({fetchAgain}) => {
   const { user, chatList, selectedChat, setSelectedChat,setChatList } = ChatState();
   const [loggedInUser, setLoggedInUser] = useState();
   const toast = useToast();

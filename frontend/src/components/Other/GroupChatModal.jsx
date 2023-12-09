@@ -10,6 +10,7 @@ import {
   Button, 
   useDisclosure,
   FormControl,
+  Box,
 } from '@chakra-ui/react';
 import {useState} from 'react';
 import {useToast} from '@chakra-ui/react';
@@ -17,6 +18,7 @@ import {ChatState} from '../../Context/ChatProvider';
 import {Input} from '@chakra-ui/react';
 import axios from 'axios';
 import UserListItem from './UserListItem';
+import UserBadge from './UserBadge';
 
 const GroupChatModal = ({children}) => {
   // Add your component logic here
@@ -29,7 +31,7 @@ const GroupChatModal = ({children}) => {
   const {user, chatList, setChatList} = ChatState();
   
 
- const handleSearch =  async (val) => {
+  const handleSearch =  async (val) => {
     setSearch(val);
     if(!val){
         return;
@@ -53,16 +55,25 @@ const GroupChatModal = ({children}) => {
             position: 'bottom-left',
         });
     }
-
-    // Add your search logic here
     };
  
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
+    };
+    const handleDelete = (i) => {
+        setSelectedUsers(selectedUsers.filter((user) => user._id !== i._id));
     };
 
     const handleSelect = (i) => {
+        if(selectedUsers.includes(i)){
+            toast({
+                title: 'User already selected',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'bottom-left',
+            });
         setSelectedUsers([...selectedUsers, i]);
-    }
+    }};
 
   return (
     <>
@@ -91,10 +102,16 @@ const GroupChatModal = ({children}) => {
         <FormControl>
         <Input placeholder="search for users" value={search} onChange={(e) => handleSearch(e.target.value)} />
         </FormControl>
+
+        <Box w="100%" d="flex" flexWrap="wrap">
+        {selectedUsers.map((i) => (
+            <UserBadge key={i._id} i={i} handleFunction = {() => handleDelete(i)}/>
+        ))}
+        </Box>
           
-          {searchResults.map((i) => (
+          {searchResults?.map((i) => (
             <UserListItem
-              key={i._id}
+              key={user._id}
               i={i}
               handleFunction={() => handleSelect(i)}
             />
@@ -112,5 +129,6 @@ const GroupChatModal = ({children}) => {
     </>
   )
 };
+
 
 export default GroupChatModal;

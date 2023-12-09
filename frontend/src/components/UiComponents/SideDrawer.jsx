@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Box, Input, Text, Tooltip, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { SearchIcon, BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import ProfileModal from '../Other/profielModal';
+import ProfileModal from '../Other/profileModal';
 import { ChatState } from '../../Context/ChatProvider';
 import {useNavigate } from 'react-router-dom';
 import { useDisclosure, useToast } from '@chakra-ui/react';
