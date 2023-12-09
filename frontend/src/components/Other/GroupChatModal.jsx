@@ -17,8 +17,8 @@ import {useToast} from '@chakra-ui/react';
 import {ChatState} from '../../Context/ChatProvider';
 import {Input} from '@chakra-ui/react';
 import axios from 'axios';
-import UserListItem from './UserListItem';
-import UserBadge from './UserBadge';
+import UserListItem from './UserListItem.jsx';
+import UserBadge from './UserBadge.jsx';
 
 const GroupChatModal = ({children}) => {
   // Add your component logic here
@@ -29,6 +29,7 @@ const GroupChatModal = ({children}) => {
   const [searchResults, setSearchResults] = useState([]);
   const toast = useToast();
   const {user, chatList, setChatList} = ChatState();
+  const [loading, setLoading] = useState(false);
   
 
   const handleSearch =  async (val) => {
@@ -37,6 +38,7 @@ const GroupChatModal = ({children}) => {
         return;
     }
     try{
+        setLoading(true);
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
@@ -44,6 +46,7 @@ const GroupChatModal = ({children}) => {
             };
             const {data} = await axios.get(`/api/user?search=${search}`, config);
             console.log(data);
+            setLoading(false);
             setSearchResults(data);
     }catch(error){
         toast({
@@ -60,10 +63,12 @@ const GroupChatModal = ({children}) => {
     const handleSubmit = () => {
     };
     const handleDelete = (i) => {
+  
         setSelectedUsers(selectedUsers.filter((user) => user._id !== i._id));
     };
 
     const handleSelect = (i) => {
+        console.log(selectedUsers);
         if(selectedUsers.includes(i)){
             toast({
                 title: 'User already selected',
@@ -71,9 +76,10 @@ const GroupChatModal = ({children}) => {
                 duration: 3000,
                 isClosable: true,
                 position: 'bottom-left',
-            });
+            });}
         setSelectedUsers([...selectedUsers, i]);
-    }};
+        console.log(selectedUsers);
+    };
 
   return (
     <>
@@ -104,18 +110,22 @@ const GroupChatModal = ({children}) => {
         </FormControl>
 
         <Box w="100%" d="flex" flexWrap="wrap">
-        {selectedUsers.map((i) => (
-            <UserBadge key={i._id} i={i} handleFunction = {() => handleDelete(i)}/>
+        {selectedUsers.map((u) => (
+            <UserBadge key={u._id} u={u} handleFunction = {() => handleDelete(u)}/>
         ))}
         </Box>
-          
-          {searchResults?.map((i) => (
-            <UserListItem
-              key={user._id}
-              i={i}
-              handleFunction={() => handleSelect(i)}
-            />
-          ))}
+          {loading ? (
+              // <ChatLoading />
+              <div>Loading...</div>
+            ) : (
+              searchResults?.map((i) => (
+                  <UserListItem
+                    key={i._id}
+                    i={i}
+                    handleFunction={() => handleSelect(i)}
+                  />
+                ))
+            )}
 
           </ModalBody>
 
