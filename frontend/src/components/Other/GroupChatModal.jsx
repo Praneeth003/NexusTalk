@@ -61,6 +61,56 @@ const GroupChatModal = ({children}) => {
     };
  
     const handleSubmit = () => {
+        if(!groupName){
+            toast({
+                title: 'Please enter a group name',
+                status: 'warning',
+                duration: 3000,
+                isClosable: true,
+                position: 'bottom-left',
+            });
+            return;
+        }
+        if(selectedUsers.length < 2){
+            toast({
+                title: 'Please select atleast 2 users',
+                status: 'warning',
+                duration: 3000,
+                isClosable: true,
+                position: 'bottom-left',
+            });
+            return;
+        }
+        const createGroup = async () => {
+            try{
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                };
+                const {data} = await axios.post('/api/chat/group', {name: groupName, users: JSON.stringify(selectedUsers.map((u) => u._id))}, config);
+                console.log(data);
+                setChatList([...chatList, data]);
+                onClose();
+                toast({
+                    title: 'Group created successfully',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'bottom-left',
+                });
+            }catch(error){
+                toast({
+                    title: 'Something went wrong',
+                    description: 'Unable to create group',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'bottom-left',
+                });
+            }
+        };
+        createGroup();
     };
     const handleDelete = (i) => {
   

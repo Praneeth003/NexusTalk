@@ -18,7 +18,8 @@ import {
 const SideDrawer = () => {
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]); 
-
+  const [loadingChat, setLoadingChat] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {user, setSelectedChat, chatList, setChatList} = ChatState();
 
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -37,6 +38,7 @@ const SideDrawer = () => {
       return;
     }
     try{
+      setLoadingChat(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -44,6 +46,7 @@ const SideDrawer = () => {
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
       console.log(data);
+      setLoadingChat(false);
       setSearchResult(data);
     }catch(error){
       toast({
@@ -64,6 +67,7 @@ const SideDrawer = () => {
 
   const accessChat = (userId) => {
     console.log(userId);
+    setLoadingChat(true);
     try{
       const config = {
         headers: {
@@ -80,6 +84,7 @@ const SideDrawer = () => {
       }
 
       setSelectedChat(data);
+      setLoadingChat(false);
       onClose();
   }
   catch(error){
@@ -139,13 +144,15 @@ const SideDrawer = () => {
       <Button onClick={handleSearch}>Search</Button>
     </Box>
 
-    {searchResult?.map((i) => (
+    {loading ? 
+    (<div>Loading...</div>) : 
+    ( searchResult?.map((i) => (
       <UserListItem
       key = {i._id}
       i = {i}
       handleFunction={() => accessChat(i._id)}
       />
-    ))}
+    )))}
     
     </DrawerBody>
     </DrawerContent>

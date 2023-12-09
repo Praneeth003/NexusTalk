@@ -86,7 +86,7 @@ const MyChats = ({fetchAgain}) => {
       {chatList ? 
           <Stack overflowY="scroll" height = "90vh">
             {chatList.map((chat) => (
-              <Box
+              chat && <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
