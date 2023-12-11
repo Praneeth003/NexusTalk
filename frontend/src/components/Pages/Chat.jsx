@@ -10,13 +10,24 @@ axios.defaults.baseURL = 'http://localhost:4000';
 
 function Chat(){
     const {user} = ChatState();
+    const [fetchAgain, setFetchAgain] = useState(false);
 
    return (
     <div style={{width: "100%"}}>
     {user && <SideDrawer />}
-    <Box d = "flex" justifyContent = "space-between" alignItems = "center" h = "95vh">
-    {user && <MyChats />}
-    {user && <ChatBox />}
+    <Box 
+      style={{
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    height: "91.5vh",
+    padding: "10px",
+    width: "100%",
+    flexWrap: "nowrap",
+  }}
+    >
+    {user && <MyChats  fetchAgain={fetchAgain} setFetchAgain = {setFetchAgain}/>}
+    {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain = {setFetchAgain}/>}
     </Box>
     </div>
 );
