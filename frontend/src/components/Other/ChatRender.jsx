@@ -2,7 +2,9 @@ import React from 'react';
 import {ChatState} from '../../Context/ChatProvider';
 import {Box, IconButton, Text} from '@chakra-ui/react';
 import {ArrowBackIcon} from '@chakra-ui/icons';
-import {getSender} from '../../logic';
+import {getSender, getFullSender} from '../../logic';
+import ProfileModal from './profileModal';
+import UpdateGroupChatModal from './UpdateGroupChatModal';
 
 const ChatRender = (fetchAgain, setFetchAgain) => {
     const {user, selectedChat, setSelectedChat} = ChatState();
@@ -24,11 +26,32 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
           onClick={() => setSelectedChat("")} />
           
           {!selectedChat.isGroupChat ?
-          (<>{getSender(user, selectedChat.users)}</>)
+          (<>
+          {getSender(user, selectedChat.users)}
+          <ProfileModal user = {getFullSender(user, selectedChat.users)}></ProfileModal>
+          </>)
           :
-          selectedChat.chatName}
+          (
+          <>
+          {selectedChat.chatName}
+          <UpdateGroupChatModal fetchAgain = {fetchAgain} setFetchAgain = {setFetchAgain}/>
+          </>
+          )
+          }
           
           </Text>
+          <Box
+          d="flex"
+          flexDir="column"
+          p={3}
+          bg="#E8E8E8"
+          w="100%"
+          h="100%"
+          borderRadius="lg"
+          overflowY="hidden"
+          >
+          {}
+          </Box>
         </>
       ):(
       <Box
