@@ -74,7 +74,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
 
         try{
             const config = {
-                headers: {
+                headers: {          
                     Authorization: `Bearer ${user.token}`,
                 },
             };
@@ -179,7 +179,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
                     <ModalBody>
                        <Box>
                         {selectedChat.users.map((u) => (
-                            <UserBadge u = {u} key = {u._id} handleFunction={handleRemove(u)}/>
+                            <UserBadge u = {u} key = {u._id} handleFunction={() => handleRemove(u)}/>
                         ))}
                        </Box>
                        

@@ -6,13 +6,13 @@ async function registerUser(req,res){
     const {name, email, password, profilepic} = req.body;
     if(!name || !email || !password){
         res.status(400);
-        throw new Error("Please enter all the required fields");
+        res.send("Please fill all fields");
     }
 
     const userExists = await User.findOne({email});
     if(userExists){
         res.status(400);
-        throw new Error("User already exists");
+        res.send("User already exists");
     }
 
     const user = await User.create({
@@ -31,7 +31,7 @@ async function registerUser(req,res){
         });
     }else{
         res.status(400);
-        throw new Error("Failed to create user");
+        res.send("Failed to create user");
     }
 }
 
@@ -48,7 +48,7 @@ async function authUser(req,res){
         });
     }else{
         res.status(400);
-        throw new Error("Incorrect email or password");
+        res.send("Invalid email or password");
     }
 }
 // We can search either by name or email

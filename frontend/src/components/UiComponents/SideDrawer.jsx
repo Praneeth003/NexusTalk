@@ -38,7 +38,7 @@ const SideDrawer = () => {
       return;
     }
     try{
-      setLoadingChat(true);
+      setLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -46,11 +46,12 @@ const SideDrawer = () => {
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
       console.log(data);
-      setLoadingChat(false);
+      setLoading(false);
       setSearchResult(data);
     }catch(error){
       toast({
         title: "Something went wrong",
+        description: "Failed to search users",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -65,36 +66,37 @@ const SideDrawer = () => {
     navigate("/");
   };
 
-  const accessChat = (userId) => {
+  const accessChat = async (userId) => {
     console.log(userId);
-    setLoadingChat(true);
+    
     try{
+      setLoadingChat(true);
       const config = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const {data} = axios.post(`/api/chat`, {userId}, config);
+      const {data} = await axios.post(`/api/chat`, {userId}, config);
       console.log(data);
 
       const chatExists = chatList.find((chat) => chat._id === data._id);
       if(!chatExists){
-        setChatList((prevState) => [...prevState, data]);
+        setChatList([data, ...chatList]);
       }
 
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
-  }
-  catch(error){
-    toast({
-      title: "Error in accessing chat",
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-      position: "top-left"
-    });
+    }catch(error){
+      console.log(error);
+      toast({
+        title: "Error in accessing chat",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-left"
+      });
   }}
 
   return (

@@ -54,6 +54,7 @@ function SignUp(){
                 isClosabale: "true" 
             });
         }
+        else{
         try{
             const config ={
                 headers:{
@@ -80,6 +81,7 @@ function SignUp(){
                 isClosable: true,
                 position: "bottom",
             });
+        }
         }
         setState({
         name: "",

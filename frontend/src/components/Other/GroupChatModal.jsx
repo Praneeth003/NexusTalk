@@ -60,7 +60,7 @@ const GroupChatModal = ({children}) => {
     }
     };
  
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if(!groupName){
             toast({
                 title: 'Please enter a group name',
@@ -71,17 +71,16 @@ const GroupChatModal = ({children}) => {
             });
             return;
         }
-        if(selectedUsers.length < 2){
-            toast({
-                title: 'Please select atleast 2 users',
-                status: 'warning',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-            return;
-        }
-        const createGroup = async () => {
+        // if(selectedUsers.length < 2){
+        //     toast({
+        //         title: 'Please select atleast 2 users',
+        //         status: 'warning',
+        //         duration: 3000,
+        //         isClosable: true,
+        //         position: 'bottom-left',
+        //     });
+        //     return;
+        // }
             try{
                 const config = {
                     headers: {
@@ -110,8 +109,7 @@ const GroupChatModal = ({children}) => {
                 });
             }
         };
-        createGroup();
-    };
+        
     const handleDelete = (i) => {
   
         setSelectedUsers(selectedUsers.filter((user) => user._id !== i._id));
@@ -126,7 +124,9 @@ const GroupChatModal = ({children}) => {
                 duration: 3000,
                 isClosable: true,
                 position: 'bottom-left',
-            });}
+            });
+          return;
+        }
         setSelectedUsers([...selectedUsers, i]);
         console.log(selectedUsers);
     };
