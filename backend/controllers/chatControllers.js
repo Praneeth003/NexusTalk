@@ -104,22 +104,22 @@ const renameGroupChat = asyncHandler(async(req,res) =>{
 const addUserToGroup = asyncHandler(async(req,res) =>{
     if(!req.body.chatId || !req.body.userId){
         console.log("ChatId and userId params are required");
-        return res.sendStatus(400).send({message: "ChatId and userId params are required"});
+        return res.status(400).send({message: "ChatId and userId params are required"});
     }
     try{
         const chat = await Chat.findOne({_id: req.body.chatId});
         if(chat.groupAdmin.toString() !== req.user._id.toString()){
             console.log("Only the group admin can add users to the group");
-            return res.sendStatus(400).send({message: "Only the group admin can add users to the group"});
+            return res.status(400).send({message: "Only the group admin can add users to the group"});
         }
         const user = await User.findOne({_id: req.body.userId});
         if(!user){
             console.log("User not found");
-            return res.sendStatus(400).send({message: "User not found"});
+            return res.status(400).send({message: "User not found"});
         }
         if(chat.users.includes(req.body.userId)){
             console.log("User is already present in the group");
-            return res.sendStatus(400).send({message: "User is already present in the group"});
+            return res.status(400).send({message: "User is already present in the group"});
         }
         chat.users.push(req.body.userId);
         await chat.save();
@@ -141,25 +141,25 @@ const removeUserFromGroup = asyncHandler(async(req,res) =>{
             const chat = await Chat.findOne({_id: req.body.chatId});
             if(chat.groupAdmin.toString() !== req.user._id.toString()){
                 console.log("Only the group admin can remove users from the group");
-                res.sendStatus(400).send({message: "Only the group admin can remove users from the group"});
+                return res.status(400).send({message: "Only the group admin can remove users from the group"});
             }
-            if(chat.users.length < 3){
-                console.log("Group chat must have atleast 2 users");
-                res.sendStatus(400).send({message: "Group chat must have atleast 2 users"});
-            }
+            // if(chat.users.length < 3){
+            //     console.log("Group chat must have atleast 2 users");
+            //     return res.status(400).send({message: "Group chat must have atleast 2 users"});
+            // }
             const user = await User.findOne({_id: req.body.userId});
             if(!user){
                 console.log("User not found");
-                res.sendStatus(400).send({message: "User not found"});
+                return res.status(400).send({message: "User not found"});
             }
             if(!chat.users.includes(req.body.userId)){
                 console.log("User is not present in the group");
-                res.sendStatus(400).send({message: "User is not present in the group"});
+                return res.status(400).send({message: "User is not present in the group"});
             }
             chat.users = chat.users.filter((id) => id.toString() !== req.body.userId.toString());
             await chat.save();
             const fullChat = await Chat.findOne({_id: req.body.chatId}).populate("users", "-password").populate("latestMessage").populate("groupAdmin", "-password");
-            res.status(200).send(fullChat);
+            return res.status(200).send(fullChat);
         }catch(error){
             res.status(400);
             res.send(error.message);

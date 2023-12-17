@@ -9,6 +9,7 @@ import { Box, Input } from '@chakra-ui/react';
 import axios from 'axios';
 import { Toast } from '@chakra-ui/react';
 import UserListItem from './UserListItem';
+import { set } from 'mongoose';
 
 
 function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
@@ -61,18 +62,9 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
             });
             return;
         }
-        if(selectedChat.groupAdmin._id === u._id){
-            Toast({
-                title: 'Admin cannot be removed',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-            return;
-        }
 
         try{
+            setLoading(true);
             const config = {
                 headers: {          
                     Authorization: `Bearer ${user.token}`,
@@ -81,6 +73,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
             const {data} = await axios.put('/api/chat/remove', {chatId: selectedChat._id, userId: u._id}, config);
             u._id === user._id ? setSelectedChat() : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
+            setLoading(false);
         }
         catch(error){
             Toast({
@@ -91,8 +84,9 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
                 isClosable: true,
                 position: 'bottom-left',
             });
+            setLoading(false);
         }
-
+        setGroupChatName("");
     };
 
     const handleAdd = async (u) => {
@@ -125,6 +119,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
             const {data} = await axios.put('/api/chat/add', {chatId: selectedChat._id, userId: u._id}, config);
             setSelectedChat(data);
             setFetchAgain(!fetchAgain);
+            
         }catch(error){
             Toast({
                 title: 'Something went wrong',
@@ -137,7 +132,6 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
         }
 
     };
-
    
     const handleSearch =  async (val) => {
     setSearch(val);
@@ -167,7 +161,6 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
     }
     };
     
- 
     return (
         <>
             <IconButton d = {{base: "flex"}} icon = {<ViewIcon/>} onClick = {onOpen}/>
