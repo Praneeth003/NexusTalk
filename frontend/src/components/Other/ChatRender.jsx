@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {ChatState} from '../../Context/ChatProvider';
-import {Box, FormControl, IconButton, Text} from '@chakra-ui/react';
+import {Box, FormControl, IconButton, Text, useToast} from '@chakra-ui/react';
 import {ArrowBackIcon} from '@chakra-ui/icons';
 import {getSender, getFullSender} from '../../logic';
 import ProfileModal from './profileModal';
 import UpdateGroupChatModal from './UpdateGroupChatModal';
 import {Input} from '@chakra-ui/react';
+import axios from 'axios';
+
 
 
 const ChatRender = (fetchAgain, setFetchAgain) => {
@@ -13,13 +15,12 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
     const [messages, setMessages] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState(null);
+    const toast = useToast();
 
-    const typingHandler = (e) => {
-        setNewMessage(e.target.value);
-    };
 
     const sendMessage = async (e) => {
       if (e.key === "Enter" && newMessage) {
+        setNewMessage("");
         try{
           const config = {
             headers: {
@@ -27,10 +28,50 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
               Authorization: `Bearer ${user.token}`,
             },
         };
-        const {data} =  
-        
+        const {data} =  await axios.post("/api/message", {content: newMessage, chatId: selectedChat._id}, config);
+        console.log(data);
+        setMessages((prev) => [...prev, data]);
+      }catch(error){
+        toast({
+          title: "Error",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     };
+  }
+
+    const fetchMessages = async () => {
+      if (!selectedChat) return;
+      setLoading(true);
+      try{
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+      };
+      const {data} = await axios.get(`/api/message/${selectedChat._id}`, config);
+      console.log(data);
+      setMessages(data);
+      setLoading(false);
+    }catch(error){
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
+
+  useEffect(() => {
+  fetchMessages();
+},[selectedChat]);
+
 
   return (
     <>
@@ -74,6 +115,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
           borderRadius="lg"
           overflowY="hidden"
           >
+          
           <div>
             { /* Messages */}
           </div>
@@ -83,7 +125,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
               variant="filled"
               bg = "E0E0E0"
               value={newMessage}
-              onChange={typingHandler}
+              onChange={(e) => setNewMessage(e.target.value)}
             />
           </FormControl>
           </Box>
