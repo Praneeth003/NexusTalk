@@ -106,20 +106,26 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
           
           </Text>
           <Box
-          d="flex"
-          flexDir="column"
+          position="relative"
           p={3}
           bg="#E8E8E8"
           w="100%"
           h="100%"
           borderRadius="lg"
-          overflowY="hidden"
+          overflowY="auto"
           >
           
           <div>
             { /* Messages */}
           </div>
-          <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+          <FormControl 
+          position="absolute"
+          bottom="0"
+          width="95%"
+          onKeyDown={sendMessage} 
+          isRequired 
+          mb={3}
+          >
             <Input
               placeholder="Type here..."
               variant="filled"
