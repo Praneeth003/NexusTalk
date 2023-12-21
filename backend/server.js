@@ -6,6 +6,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import {notFound, errorHandler} from "./middleware/errorMiddleware.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import {Server} from "socket.io";
+import http from "http";
 
 dotenv.config();
 connectDB();
@@ -25,6 +27,29 @@ app.use(notFound);
 app.use(errorHandler); 
 
 const port = process.env.PORT;
-app.listen(port, () =>{
-    console.log(`Server is running at port ${port}`);
-})
+
+const server = http.createServer(app);
+
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("Connected to a Socket.IO server");
+    socket.on('setup', (userData) => {
+        socket.join(userData._id);
+        console.log(userData._id);
+        socket.emit('connected');
+    });
+    socket.on('join chat', (room) => {
+        socket.join(room);
+        console.log("User joined room " + room);
+    });
+});
+

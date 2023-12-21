@@ -8,6 +8,11 @@ import UpdateGroupChatModal from './UpdateGroupChatModal';
 import {Input} from '@chakra-ui/react';
 import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
+import { io } from "socket.io-client";
+import { set } from 'mongoose';
+
+const ENDPOINT = "http://localhost:4000";
+var socket, selectedChatCompare;
 
 const ChatRender = (fetchAgain, setFetchAgain) => {
     const {user, selectedChat, setSelectedChat} = ChatState();
@@ -15,6 +20,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState(null);
     const toast = useToast();
+    const [socketConnected, setSocketConnected] = React.useState(false);
 
 
     const sendMessage = async (e) => {
@@ -56,6 +62,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
       console.log(data);
       setMessages(data);
       setLoading(false);
+      socket.emit("join chat", selectedChat._id);
     }catch(error){
       toast({
         title: "Error",
@@ -70,6 +77,13 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
   useEffect(() => {
   fetchMessages();
 },[selectedChat]);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+  }, []);
+
 
 
   return (
