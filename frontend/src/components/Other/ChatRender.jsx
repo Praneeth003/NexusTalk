@@ -7,8 +7,7 @@ import ProfileModal from './profileModal';
 import UpdateGroupChatModal from './UpdateGroupChatModal';
 import {Input} from '@chakra-ui/react';
 import axios from 'axios';
-
-
+import ScrollableChat from './ScrollableChat';
 
 const ChatRender = (fetchAgain, setFetchAgain) => {
     const {user, selectedChat, setSelectedChat} = ChatState();
@@ -99,7 +98,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
           (
           <>
           {selectedChat.chatName}
-          <UpdateGroupChatModal fetchAgain = {fetchAgain} setFetchAgain = {setFetchAgain}/>
+          <UpdateGroupChatModal fetchAgain = {fetchAgain} setFetchAgain = {setFetchAgain} fetchMessages = {fetchMessages}/>
           </>
           )
           }
@@ -115,8 +114,8 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
           overflowY="auto"
           >
           
-          <div>
-            { /* Messages */}
+          <div className = "messages">
+            <ScrollableChat messages = {messages} />
           </div>
           <FormControl 
           position="absolute"

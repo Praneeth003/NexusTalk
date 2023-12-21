@@ -12,7 +12,7 @@ import UserListItem from './UserListItem';
 import { set } from 'mongoose';
 
 
-function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
+function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [groupChatName, setGroupChatName] = useState();
     const [search, setSearch] = useState("");
@@ -73,6 +73,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain}){
             const {data} = await axios.put('/api/chat/remove', {chatId: selectedChat._id, userId: u._id}, config);
             u._id === user._id ? setSelectedChat() : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
+            fetchMessages();
             setLoading(false);
         }
         catch(error){
