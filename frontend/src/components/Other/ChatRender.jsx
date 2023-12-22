@@ -9,7 +9,6 @@ import {Input} from '@chakra-ui/react';
 import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import { io } from "socket.io-client";
-import { set } from 'mongoose';
 
 const ENDPOINT = "http://localhost:4000";
 var socket, selectedChatCompare;
@@ -35,6 +34,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
         };
         const {data} =  await axios.post("/api/message", {content: newMessage, chatId: selectedChat._id}, config);
         console.log(data);
+        socket.emit("new message", data);
         setMessages((prev) => [...prev, data]);
       }catch(error){
         toast({
@@ -76,6 +76,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
 
   useEffect(() => {
   fetchMessages();
+  selectedChatCompare = selectedChat;
 },[selectedChat]);
 
   useEffect(() => {
@@ -84,8 +85,17 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
     socket.on("connection", () => setSocketConnected(true));
   }, []);
 
-
-
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if(!selectedChatCompare || newMessageReceived.chat._id !== selectedChatCompare._id){
+        //Notification
+      }
+      else{
+        setMessages((prev) => [...prev, newMessageReceived]);
+      }
+    });
+  });
+  
   return (
     <>
       {selectedChat?(
@@ -132,12 +142,14 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
             <ScrollableChat messages = {messages} />
           </div>
           <FormControl 
-          position="absolute"
+          position="fixed"
           bottom="0"
-          width="95%"
+          width="100%"
           onKeyDown={sendMessage} 
           isRequired 
           mb={3}
+          ml={0}
+          mt={10}
           >
             <Input
               placeholder="Type here..."
