@@ -13,13 +13,15 @@ import { io } from "socket.io-client";
 const ENDPOINT = "http://localhost:4000";
 var socket, selectedChatCompare;
 
-const ChatRender = (fetchAgain, setFetchAgain) => {
-    const {user, selectedChat, setSelectedChat} = ChatState();
+const ChatRender = ({fetchAgain, setFetchAgain}) => {
+    const {user, selectedChat, setSelectedChat, notification, setNotification} = ChatState();
     const [messages, setMessages] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState(null);
     const toast = useToast();
     const [socketConnected, setSocketConnected] = React.useState(false);
+
+    console.log(`debug 1: ${setFetchAgain}`);
 
 
     const sendMessage = async (e) => {
@@ -35,7 +37,7 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
         const {data} =  await axios.post("/api/message", {content: newMessage, chatId: selectedChat._id}, config);
         console.log(data);
         socket.emit("new message", data);
-        setMessages((prev) => [...prev, data]);
+        setMessages([...messages, data]);
       }catch(error){
         toast({
           title: "Error",
@@ -75,23 +77,28 @@ const ChatRender = (fetchAgain, setFetchAgain) => {
   }
 
   useEffect(() => {
+  socket = io(ENDPOINT);
+  socket.emit("setup", user);
+  socket.on("connected", () => setSocketConnected(true));
+}, []);
+
+  useEffect(() => {
   fetchMessages();
   selectedChatCompare = selectedChat;
 },[selectedChat]);
 
-  useEffect(() => {
-    socket = io(ENDPOINT);
-    socket.emit("setup", user);
-    socket.on("connection", () => setSocketConnected(true));
-  }, []);
-
-  useEffect(() => {
+   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
-      if(!selectedChatCompare || newMessageReceived.chat._id !== selectedChatCompare._id){
-        //Notification
-      }
-      else{
-        setMessages((prev) => [...prev, newMessageReceived]);
+      if (
+        !selectedChatCompare || 
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
+      } else {
+        setMessages([...messages, newMessageReceived]);
       }
     });
   });

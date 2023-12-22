@@ -26,7 +26,7 @@ function Chat(){
     flexWrap: "nowrap",
   }}
     >
-    {user && <MyChats  fetchAgain={fetchAgain} setFetchAgain = {setFetchAgain}/>}
+    {user && <MyChats  fetchAgain={fetchAgain}/>}
     {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain = {setFetchAgain}/>}
     </Box>
     </div>

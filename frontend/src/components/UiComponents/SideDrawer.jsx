@@ -14,13 +14,14 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from '@chakra-ui/react';
+import { getSender } from '../../logic';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]); 
   const [loadingChat, setLoadingChat] = useState(false);
   const [loading, setLoading] = useState(false);
-  const {user, setSelectedChat, chatList, setChatList} = ChatState();
+  const {user, setSelectedChat, chatList, setChatList, notification, setNotification} = ChatState();
 
   const {isOpen, onOpen, onClose} = useDisclosure();
   const navigate = useNavigate();
@@ -122,6 +123,19 @@ const SideDrawer = () => {
       <MenuButton>
         <BellIcon fontSize = "2xl"/>
       </MenuButton>
+      <MenuList>
+        {!notification.length ? (
+          <MenuItem>No notifications</MenuItem>
+        ) : (
+          notification.map((n) => (
+            <MenuItem key = {n._id}>
+              {n.chat.isGroupChat ? `New Message in ${n.chat.name}` : `New Message from ${getSender(user,n.chat.users)}`
+                }
+            </MenuItem>
+          ))
+        )
+          }
+      </MenuList>
     </Menu>
     <Menu>
         <MenuButton ml = "5px" as={Button} rightIcon={<ChevronDownIcon />}>

@@ -11,6 +11,8 @@ const ChatProvider =({children}) => {
     // chatList is for storing all the chat list of the logged in user
     const [chatList, setChatList] = useState([]);
     const navigate = useNavigate();
+    const [notification, setNotification] = useState([]);
+
     useEffect(() => {
         const loggedInUser = localStorage.getItem("userInfo");
         const foundUser = JSON.parse(loggedInUser);
@@ -22,7 +24,7 @@ const ChatProvider =({children}) => {
     }, [navigate]);
 
     return (
-        <ChatContext.Provider value = {{user, setUser, selectedChat, setSelectedChat, chatList, setChatList }}>
+        <ChatContext.Provider value = {{user, setUser, selectedChat, setSelectedChat, chatList, setChatList, notification, setNotification }}>
             {children}
         </ChatContext.Provider>
     );

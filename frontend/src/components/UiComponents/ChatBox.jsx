@@ -3,7 +3,7 @@ import {ChatState} from '../../Context/ChatProvider';
 import ChatRender from '../Other/ChatRender';
 import {Box} from '@chakra-ui/react';
 
-const ChatBox = (fetchAgain, setFetchAgain) => {
+const ChatBox = ({fetchAgain, setFetchAgain}) => {
   const {selectedChat} = ChatState();
   return (
     <Box
