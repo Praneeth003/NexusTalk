@@ -110,13 +110,13 @@ const SideDrawer = () => {
     height="80px"
     padding="1rem"
     bg="gray.200">
-    <Tooltip hasArrow label='Search Users' bg='gray.300' color='black' Placement="right-end">
-      <Button variant="outline" colorScheme="blue" leftIcon={<SearchIcon />} onClick={onOpen}>
-        Search Users
+    <Tooltip hasArrow label='Add Users' bg='gray.300' color='black' Placement="right-end">
+      <Button variant="outline" colorScheme="black" leftIcon={<SearchIcon />} onClick={onOpen} borderWidth="0" fontSize="lg" fontFamily="Trebuchet MS" >
+        Search Users to Add Them
       </Button>
     </Tooltip>
 
-    <Text p = "0" b ="0" m = "0" fontSize="3xl" color = "black" textAlign="center">NexusTalk</Text>
+    <Text p = "0" b ="0" m = "0" fontSize="3xl" color = "black" fontFamily="Monaco" fontWeight="Bold" textAlign="center">NexusTalk</Text>
 
     <div>
     <Menu>
@@ -142,7 +142,7 @@ const SideDrawer = () => {
     </Menu>
     <Menu>
         <MenuButton ml = "5px" as={Button} rightIcon={<ChevronDownIcon />}>
-        <Avatar size = "sm" src = "https://images.immediate.co.uk/production/volatile/sites/3/2023/08/2023.06.28-06.20-boundingintocomics-649c79f009cdf-Cropped-8d74232.png?resize=768,574" />
+        <Avatar size = "sm" src = {user.profilePic} />
         </MenuButton>
       <MenuList>
         <ProfileModal user={user}>
@@ -158,9 +158,17 @@ const SideDrawer = () => {
     <DrawerContent>
     <DrawerHeader borderBottomWidth='1px' display="flex" alignItems="center" justifyContent="center" >Search Users</DrawerHeader>
     <DrawerBody>
-    <Box d = "flex">
-      <Input placeholder = "Search by Name or Email" value = {search} onChange={(event) => setSearch(event.target.value)} />
-      <Button onClick={handleSearch}>Search</Button>
+   <Box d="flex" flexDirection="column" alignItems="center">
+    <Input 
+    placeholder="Search by Name or Email" 
+    value={search} 
+    onChange={(event) => setSearch(event.target.value)} 
+    borderWidth="1px" 
+    borderColor="black"
+    />
+    <Button  mt={1} ml={185} onClick={handleSearch} borderWidth="1px" borderColor="black">
+    Search
+    </Button>
     </Box>
 
     {loading ? 
