@@ -121,20 +121,23 @@ const SideDrawer = () => {
     <div>
     <Menu>
       <MenuButton>
-        <BellIcon fontSize = "2xl"/>
+        <BellIcon fontSize = "2xl" color={notification.length != 0 ? "red" : "black"}/>
       </MenuButton>
       <MenuList>
-        {!notification.length ? (
-          <MenuItem>No notifications</MenuItem>
-        ) : (
-          notification.map((n) => (
-            <MenuItem key = {n._id}>
-              {n.chat.isGroupChat ? `New Message in ${n.chat.name}` : `New Message from ${getSender(user,n.chat.users)}`
-                }
-            </MenuItem>
-          ))
-        )
-          }
+          {!notification.length && "No New Messages"}
+              {notification.map((i) => (
+                <MenuItem
+                  key={i._id}
+                  onClick={() => {
+                    setSelectedChat(i.chat);
+                    setNotification(notification.filter((n) => n !== i));
+                  }}
+                >
+                  {i.chat.isGroupChat
+                    ? `New Message in ${i.chat.chatName}`
+                    : `New Message from ${getSender(user, i.chat.users)}`}
+                </MenuItem>
+              ))}
       </MenuList>
     </Menu>
     <Menu>
