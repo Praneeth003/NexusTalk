@@ -7,6 +7,7 @@ import {useNavigate } from 'react-router-dom';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import UserListItem from '../Other/UserListItem';
+import { Center } from '@chakra-ui/layout';
 import {
   Drawer,
   DrawerBody,
@@ -110,7 +111,7 @@ const SideDrawer = () => {
     height="80px"
     padding="1rem"
     bg="gray.200">
-    <Tooltip hasArrow label='Add Users' bg='gray.300' color='black' Placement="right-end">
+    <Tooltip hasArrow fontFamily='Trebuchet MS' label='Add Users' bg='gray.300' color='black' Placement="right-end">
       <Button variant="outline" colorScheme="black" leftIcon={<SearchIcon />} onClick={onOpen} borderWidth="0" fontSize="lg" fontFamily="Trebuchet MS" >
         Search Users to Add Them
       </Button>
@@ -121,10 +122,13 @@ const SideDrawer = () => {
     <div>
     <Menu>
       <MenuButton>
-        <BellIcon fontSize = "2xl" color={notification.length != 0 ? "red" : "black"}/>
+        <BellIcon fontSize = "2xl"  color={notification.length != 0 ? "red" : "black"}/>
       </MenuButton>
-      <MenuList>
-          {!notification.length && "No New Messages"}
+      <MenuList fontFamily="Trebuchet MS">
+          {!notification.length && 
+          <Center>
+          No New Messages
+          </Center>}
               {notification.map((i) => (
                 <MenuItem
                   key={i._id}
@@ -146,9 +150,9 @@ const SideDrawer = () => {
         </MenuButton>
       <MenuList>
         <ProfileModal user={user}>
-        <MenuItem>My Profile</MenuItem>
+        <MenuItem fontFamily="Trebuchet MS" >My Profile</MenuItem>
         </ProfileModal>
-        <MenuItem onClick = {logoutHandler}>Logout</MenuItem>
+        <MenuItem fontFamily="Trebuchet MS" onClick = {logoutHandler}>Logout</MenuItem>
       </MenuList>
     </Menu>
     </div>
@@ -156,7 +160,7 @@ const SideDrawer = () => {
     <Drawer placement='left' onClose = {onClose} isOpen = {isOpen} >
     <DrawerOverlay /> 
     <DrawerContent>
-    <DrawerHeader borderBottomWidth='1px' display="flex" alignItems="center" justifyContent="center" >Search Users</DrawerHeader>
+    <DrawerHeader borderBottomWidth='1px' display="flex" alignItems="center" justifyContent="center" fontFamily="Trebuchet MS" >Search Users</DrawerHeader>
     <DrawerBody>
    <Box d="flex" flexDirection="column" alignItems="center">
     <Input 
@@ -166,7 +170,7 @@ const SideDrawer = () => {
     borderWidth="1px" 
     borderColor="black"
     />
-    <Button  mt={1} ml={185} onClick={handleSearch} borderWidth="1px" borderColor="black">
+    <Button  mt={1} ml={185} onClick={handleSearch} borderWidth="1px" borderColor="black" fontFamily="Trebuchet MS">
     Search
     </Button>
     </Box>

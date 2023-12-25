@@ -9,6 +9,7 @@ import {Input} from '@chakra-ui/react';
 import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import { io } from "socket.io-client";
+import { Flex } from '@chakra-ui/layout';
 
 const ENDPOINT = "http://localhost:4000";
 var socket, selectedChatCompare;
@@ -107,13 +108,12 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
     <>
       {selectedChat?(
         <>
-          <Text
+          <Flex
           fontSize={{base: "28px", md: "30px"}}
-          fontFamily="Work sans"
+          fontFamily="Trebuchet MS"
           pb={3}
           w = "100%"
-          d="flex"
-          justifyContent={{base: "space-between"}}
+          justifyContent="space-between"
           alignItems = "center">
           <IconButton
           d = {{base: "flex", md: "none"}}
@@ -134,13 +134,13 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
           )
           }
           
-          </Text>
+          </Flex>
           <Box
           position="relative"
           p={3}
-          bg="#E8E8E8"
+          bg="#F8F8F8"
           w="100%"
-          h="100%"
+          h="72vh"
           borderRadius="lg"
           overflowY="auto"
           >
@@ -151,12 +151,12 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
           <FormControl 
           position="fixed"
           bottom="0"
-          width="100%"
+          width="63%"
           onKeyDown={sendMessage} 
           isRequired 
-          mb={3}
+          mb={5}
           ml={0}
-          mt={10}
+          mt={1}
           >
             <Input
               placeholder="Type here..."
@@ -164,6 +164,7 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
               bg = "E0E0E0"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              border="1px solid black"
             />
           </FormControl>
           </Box>

@@ -20,7 +20,7 @@ function Chat(){
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    height: "91.5vh",
+    height: "90vh",
     padding: "10px",
     width: "100%",
     flexWrap: "nowrap",

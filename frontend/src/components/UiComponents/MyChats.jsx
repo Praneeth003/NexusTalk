@@ -62,7 +62,7 @@ const MyChats = ({fetchAgain}) => {
         justifyContent="space-between"
         alignItems="center"
       >
-      My Chats
+      <Text pl={1}>My Chats</Text>
       <GroupChatModal>
       <Button
         d="flex"
@@ -79,22 +79,23 @@ const MyChats = ({fetchAgain}) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="100%"
+        h="70vh"
         borderRadius="lg"
-        overflowY="hidden"
+        overflowY="auto"
       >
       {chatList ? 
-          <Stack overflowY="scroll" height = "100%">
+          <Stack overflowY="scroll" maxHeight = "100%">
             {chatList.map((chat) => (
               chat && <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                bg={selectedChat === chat ? "#9DB2BF" : "#E8E8E8"}
+                color="black"
                 px={3}
                 py={2}
                 borderRadius="lg"
                 key={chat._id}
+                fontFamily="Trebuchet MS"
               >
                 <Text>
                   {!chat.isGroupChat
