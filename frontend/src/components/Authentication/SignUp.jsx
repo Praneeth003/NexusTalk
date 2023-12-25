@@ -11,9 +11,9 @@ function SignUp(){
         email: "",
         password: "",
         confirmPassword: "",
-        profilePicture: "",
         
     });
+    const [profilepic, setProfilepic] = useState(null);
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -33,8 +33,30 @@ function SignUp(){
         setShowPassword(!showPassword);
     }
 
+    function picupload(file){
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setState((prevValue) => {
+                return{
+                    ...prevValue,
+                    profilepic: reader.result,
+                };
+            });
+        };
+    }
+
+    // Function to handle file input change
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+            picupload(file); // Call picupload function with the selected file
+        }
+    };
+
+
     async function onSubmit(event){
-        const { name, email, password, confirmPassword, profilePicture } = state;
+        const { name, email, password, confirmPassword, profilepic } = state;
         event.preventDefault();
         if(!name || !email || !password || !confirmPassword){
             toast({
@@ -61,7 +83,7 @@ function SignUp(){
                     "Content-type": "application/json",   
                 },
             };
-            const {data} = await axios.post("/api/user", {name, email, password, profilePicture},
+            const {data} = await axios.post("/api/user", {name, email, password, profilepic},
             config);
             localStorage.setItem("userInfo", JSON.stringify(data));
             toast({
@@ -88,7 +110,7 @@ function SignUp(){
         email: "",
         password: "",
         confirmPassword: "",
-        profilePicture: "",
+        profilepic: "",
     });
     }
         
@@ -132,8 +154,9 @@ function SignUp(){
 
             <FormControl>
                 <FormLabel>Profile Picture </FormLabel>
-                <Input type = "file" accept = "image/*" onChange = {recordInput} name = "profilePicture"></Input>
-            </FormControl>
+                <Input type = "file" accept = "image/*" onChange={handleFileInputChange}/> 
+                </FormControl>
+            
 
             <Button colorScheme = 'blue' width = "100%" onClick = {onSubmit} mt = {5} >
             Sign Up

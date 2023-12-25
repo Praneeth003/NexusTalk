@@ -25,7 +25,7 @@ function ProfileModal({user, children}) {
             <ModalHeader align="center" fontSize="25px">{user.name}</ModalHeader>
             <ModalCloseButton />
             <ModalBody align="center" justify="center" >
-            <img src = {user.profilePic} alt = "" style = {{width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover"}}/>
+            <img src = {user.profilepic} alt = "" style = {{width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover"}}/>
             <p style = {{fontSize : "20px", margin : "5px"}}>{user.email}</p>
             </ModalBody>
     

@@ -171,17 +171,19 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
         </>
       ):(
       <Box
-        d="flex"
-        justifyContent="center"
-        alignItems="center"
-        h="100%"
+        style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%"
+    }}
         >
         <Text
           fontSize="3xl"
           pb={3}
           fontFamily="Work sans"
           >
-          Select a chat to start chatting!</Text>
+          Select a chat to start chatting!!</Text>
       </Box>)
       }
     </>

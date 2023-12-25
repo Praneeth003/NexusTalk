@@ -71,16 +71,6 @@ const GroupChatModal = ({children}) => {
             });
             return;
         }
-        // if(selectedUsers.length < 2){
-        //     toast({
-        //         title: 'Please select atleast 2 users',
-        //         status: 'warning',
-        //         duration: 3000,
-        //         isClosable: true,
-        //         position: 'bottom-left',
-        //     });
-        //     return;
-        // }
             try{
                 const config = {
                     headers: {
@@ -138,11 +128,11 @@ const GroupChatModal = ({children}) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
-            fontFamily='Work Sans'
+            fontFamily='Trebuchet MS'
             fontWeight='bold'
             fontSize='2xl'
             textAlign='center'
-            color='blue.500'
+            color='black'
           >Create Group</ModalHeader>
           <ModalCloseButton />
           <ModalBody
@@ -151,12 +141,12 @@ const GroupChatModal = ({children}) => {
             justifyContent = 'center'
             alignItems = 'center'
           >
-          <FormControl>
+          <FormControl pb={3}>
           <Input placeholder="Group Name" value={groupName} onChange={(e) => setGroupName(e.target.value)} />  
           </FormControl>
 
         <FormControl>
-        <Input placeholder="search for users" value={search} onChange={(e) => handleSearch(e.target.value)} />
+        <Input placeholder="Search for users" value={search} onChange={(e) => handleSearch(e.target.value)} />
         </FormControl>
 
         <Box w="100%" d="flex" flexWrap="wrap">

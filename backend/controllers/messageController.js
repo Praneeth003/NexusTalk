@@ -18,9 +18,9 @@ const sendMessage = asyncHandler(async(req,res) =>{
     };
     try{
         var message = await Message.create(newMessage);
-        message = await message.populate("sender", "name profilePic")
+        message = await message.populate("sender", "name profilepic")
         message = await message.populate("chat")
-        message = await User.populate(message, {path: "chat.users", select: "name email profilePic"});
+        message = await User.populate(message, {path: "chat.users", select: "name email profilepic"});
         await Chat.findByIdAndUpdate(chatId, {latestMessage: message});
         res.status(201).send(message);
     }catch(error){
@@ -33,7 +33,7 @@ const fetchMessages = asyncHandler(async(req,res) =>{
     const chatId = req.params.chatId;
     try{
         var messages = await Message.find({chat: chatId})
-        .populate("sender", "name email profilePic")
+        .populate("sender", "name email profilepic")
         .populate("chat");
         res.status(200).send(messages);
     }catch(error){
