@@ -35,3 +35,37 @@
     border: 1px solid #000000;
     
 }
+
+.mychats {
+    padding-bottom: 3px;
+    padding-left: 3px;
+    font-size: 28px;
+    /* For base */
+    font-size: 30px;
+    /* For md and above */
+    font-family: 'Trebuchet MS';
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mychats text {
+    padding-left: 1px;
+}
+
+.mychats button {
+    display: flex;
+    font-size: 17px;
+    /* For base */
+    font-size: 10px;
+    /* For md */
+    font-size: 17px;
+    /* For lg */
+    justify-content: flex-end;
+}
+
+.mychats button .icon {
+    margin-left: 5px;
+    /* Adjust the margin as needed */
+}
