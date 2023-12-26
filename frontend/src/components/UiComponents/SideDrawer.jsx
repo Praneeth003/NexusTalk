@@ -177,7 +177,7 @@ const SideDrawer = () => {
 
     {loading ? 
     (<div>Loading...</div>) : 
-    ( searchResult?.map((i) => (
+    (searchResult?.filter(i => i._id !== user._id).map((i) => (
       <UserListItem
       key = {i._id}
       i = {i}

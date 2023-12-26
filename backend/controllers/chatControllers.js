@@ -63,8 +63,8 @@ const createGroupChat = asyncHandler(async(req,res) =>{
     }
     var users = JSON.parse(req.body.users);
     if(users.length < 2){
-        console.log("Group chat must have atleast 2 users");
-        return res.status(400).send({message: "Group chat must have atleast 2 users"});
+        console.log("Group chat must have atleast 3 users");
+        return res.status(400).send({message: "Group chat must have atleast 3 users"});
     }
     // Add the logged in user as well to the group
     users.push(req.user._id);

@@ -22,9 +22,6 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
     const toast = useToast();
     const [socketConnected, setSocketConnected] = React.useState(false);
 
-    console.log(`debug 1: ${setFetchAgain}`);
-
-
     const sendMessage = async (e) => {
       if (e.key === "Enter" && newMessage) {
         setNewMessage("");
@@ -42,7 +39,7 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
       }catch(error){
         toast({
           title: "Error",
-          description: error.message,
+          description: `${error.response.data}`,
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -69,7 +66,7 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
     }catch(error){
       toast({
         title: "Error",
-        description: error.message,
+        description: `${error.response.data}`,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -132,9 +129,9 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
           <UpdateGroupChatModal fetchAgain = {fetchAgain} setFetchAgain = {setFetchAgain} fetchMessages = {fetchMessages}/>
           </>
           )
-          }
-          
+          }      
           </Flex>
+
           <Box
           position="relative"
           p={3}
@@ -159,7 +156,7 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
           mt={1}
           >
             <Input
-              placeholder="Type here..."
+              placeholder="Enter your message"
               variant="filled"
               bg = "E0E0E0"
               value={newMessage}

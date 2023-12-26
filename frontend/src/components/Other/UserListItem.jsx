@@ -10,9 +10,10 @@ const UserListItem = ({ i, handleFunction }) => {
       cursor="pointer"
       bg="#E8E8E8"
       _hover={{
-        background: "#38B2AC",
+        background: "#9DB2BF",
         color: "white",
       }}
+      fontFamily="Trebuchet MS"
       w="100%"
       d="flex"
       alignItems="center"
@@ -20,6 +21,7 @@ const UserListItem = ({ i, handleFunction }) => {
       px={3}
       py={2}
       mb={2}
+      mt={2}
       borderRadius="lg"
     >
       <Avatar

@@ -20,15 +20,14 @@ const ScrollableChat = ({messages}) => {
                   size="sm"
                   cursor="pointer"
                   name={m.sender.name}
-                  src={m.sender.pic}
+                  src={m.sender.profilepic}
                 />
               </Tooltip>
             )}
             <span
               style={{
-                backgroundColor: `${
-                  m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
-                }`,
+                backgroundColor: "#B4D4FF",
+                fontFamily: "Trebuchet MS",
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
                 borderRadius: "20px",

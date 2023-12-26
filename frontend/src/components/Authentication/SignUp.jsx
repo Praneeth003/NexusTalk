@@ -62,18 +62,18 @@ function SignUp(){
             toast({
                 title: "Please fill all the fields!",
                 status: "warning",
-                duration: "6000",
+                duration: 3000,
                 position: "bottom",
-                isClosabale: "true" 
+                isClosabale: true 
             });
         }
         if(password !== confirmPassword){
             toast({
                 title: "Passwords do not match!",
                 status: "error",
-                duration: "6000",
+                duration: 3000,
                 position: "bottom",
-                isClosabale: "true" 
+                isClosabale: true 
             });
         }
         else{
@@ -89,7 +89,7 @@ function SignUp(){
             toast({
                 title: "Registration is Successful!",
                 position: "bottom",
-                duration: 6000,
+                duration: 3000,
                 isClosable: true,
                 status: "success"
             });
@@ -98,8 +98,9 @@ function SignUp(){
             console.log(error);
             toast({
                 title: "Error Occured",
+                description: `${error.response.data}`,
                 status: "error",
-                duration: 6000,
+                duration: 3000,
                 isClosable: true,
                 position: "bottom",
             });
@@ -158,7 +159,7 @@ function SignUp(){
                 </FormControl>
             
 
-            <Button colorScheme = 'blue' width = "100%" onClick = {onSubmit} mt = {5} >
+            <Button colorScheme = 'teal' width = "100%" onClick = {onSubmit} mt = {5} >
             Sign Up
             </Button>
 

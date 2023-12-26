@@ -48,7 +48,7 @@ async function authUser(req,res){
         });
     }else{
         res.status(400);
-        res.send("Invalid email or password");
+        res.send("Invalid Email or Password");
     }
 }
 // We can search either by name or email

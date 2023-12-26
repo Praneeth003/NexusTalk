@@ -35,9 +35,9 @@ function SignIn(){
             toast({
                 title: "Please fill all the fields!",
                 status: "warning",
-                duration: "6000",
+                duration: 3000,
                 position: "bottom",
-                isClosabale: "true" 
+                isClosabale: true 
             });
         }
         else{
@@ -54,7 +54,7 @@ function SignIn(){
             toast({
                 title: "Logged In Successfully!",
                 position: "bottom",
-                duration: 6000,
+                duration: 3000,
                 isClosable: true,
                 status: "success"
             });
@@ -63,8 +63,9 @@ function SignIn(){
             console.log(error);
             toast({
                 title: "Error Occured",
+                description: `${error.response.data}`,
                 status: "error",
-                duration: 6000,
+                duration: 3000,
                 isClosable: true,
                 position: "bottom",
             });
@@ -93,7 +94,7 @@ function SignIn(){
                     </InputGroup>
             </FormControl>
 
-            <Button colorScheme = 'blue' width = "100%" onClick = {onSubmit} mt = {5} >
+            <Button colorScheme = 'teal' width = "100%" onClick = {onSubmit} mt = {5} >
             Sign In
             </Button>
 

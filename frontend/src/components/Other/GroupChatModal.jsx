@@ -90,11 +90,11 @@ const GroupChatModal = ({children}) => {
             }catch(error){
                 toast({
                     title: 'Something went wrong',
-                    description: 'Unable to create group',
+                    description: `${error.response.data.message}`,
                     status: 'error',
                     duration: 3000,
                     isClosable: true,
-                    position: 'bottom-left',
+                    position: 'bottom',
                 });
             }
         };
@@ -124,7 +124,7 @@ const GroupChatModal = ({children}) => {
       <span onClick={onOpen}>{children}</span>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="#F2F1EB">
           <ModalHeader
             fontFamily='Trebuchet MS'
             fontWeight='bold'
@@ -140,11 +140,11 @@ const GroupChatModal = ({children}) => {
             alignItems = 'center'
           >
           <FormControl pb={2}>
-          <Input placeholder="Group Name" value={groupName} onChange={(e) => setGroupName(e.target.value)} />  
+          <Input placeholder="Group Name" value={groupName} style={{ border: '1px solid #000', fontFamily: 'Arial' }} onChange={(e) => setGroupName(e.target.value)} />  
           </FormControl>
 
         <FormControl>
-        <Input placeholder="Search for users" value={search} onChange={(e) => handleSearch(e.target.value)} />
+        <Input placeholder="Search for users" value={search} style={{ border: '1px solid #000', fontFamily: 'Arial' }} onChange={(e) => handleSearch(e.target.value)} />
         </FormControl>
 
         <Box w="100%" d="flex" flexWrap="wrap">
@@ -168,7 +168,7 @@ const GroupChatModal = ({children}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
+            <Button colorScheme='teal' mr={3} onClick={handleSubmit} fontFamily="Trebuchet MS" >
                 Create
             </Button>
           </ModalFooter>

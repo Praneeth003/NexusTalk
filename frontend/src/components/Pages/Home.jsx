@@ -19,7 +19,7 @@ function Home(){
             d = "flex"
             justifyContent="center"
             p = {3}
-            bg = "white"
+            bg = "#DDE6ED"
             w = "100%"
             m = "40px 0 15px 0"
             borderRadius = "1g"
@@ -27,7 +27,7 @@ function Home(){
             borderColor="black" 
             borderStyle="solid"
             >
-                <Text fontSize="4xl"  fontFamily="Monaco" fontWeight="bold" color = "#4B56D2" textAlign="center">NexusTalk</Text>
+                <Text fontSize="4xl"  fontFamily="Trebuchet MS" fontWeight="bold"textAlign="center">NexusTalk</Text>
             </Box>
             <Box
             p = {4}

@@ -9,12 +9,14 @@ const UserBadge = ({u,handleFunction}) => {
       px={2}
       py={1}
       borderRadius="lg"
-      m={1}
+      mt={2}
       mb={2}
-      variant="solid"
       fontSize={12}
-      colorScheme="purple"
+      fontFamily={'Trebuchet MS'}
+      variant="solid"
+      colorScheme="green"
       cursor="pointer"
+      
       onClick={handleFunction}
     >
       {u.name}

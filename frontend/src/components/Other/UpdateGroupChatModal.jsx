@@ -42,17 +42,17 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             setFetchAgain(!fetchAgain);
         }catch(error){
             toast({
                 title: 'Something went wrong',
-                description: 'Unable to rename group',
+                description: `${error.response.data.message}`,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
 
             });
         }
@@ -66,7 +66,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             return;
         }
@@ -76,7 +76,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             return;
         }
@@ -99,7 +99,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
         }
         catch(error){
@@ -110,7 +110,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             setLoading(false);
         }
@@ -133,16 +133,16 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'success',
                 duration: 6000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
         }catch(error){
             toast({
                 title: 'Something went wrong',
-                description: '{error.message}',
+                description: `${error.response.data.message}`,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
         }
     }
@@ -154,7 +154,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             return;
         }
@@ -164,7 +164,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
             return;
         }
@@ -181,11 +181,11 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
         }catch(error){
             toast({
                 title: 'Something went wrong',
-                description: 'Unable to add user',
+                description: `${error.response.data.message}`,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom',
             });
         }
 
@@ -214,7 +214,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
             status: 'error',
             duration: 3000,
             isClosable: true,
-            position: 'bottom-left',
+            position: 'bottom',
         });
     }
     };
@@ -224,8 +224,8 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
             <IconButton d = {{base: "flex"}} icon = {<ViewIcon/>} onClick = {onOpen}/>
             <Modal isOpen = {isOpen} onClose = {onClose} isCentered>
                 <ModalOverlay/>
-                <ModalContent>
-                    <ModalHeader>{selectedChat.chatName}</ModalHeader>
+                <ModalContent border= "1px black solid" bg="#F2F1EB">
+                    <ModalHeader fontFamily = "Trebuchet MS" >{selectedChat.chatName}</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
                        <Box>
@@ -235,14 +235,21 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                        </Box>
                        
                        <FormControl className = "flex-space-between">
-                       <Input placeholder = "New Group Name" value = {groupChatName}   onChange = {(e) => setGroupChatName(e.target.value)}/>
-                          <Button colorScheme = "teal" ml={2} onClick = {handleRename} >
+                       <Input placeholder = "Rename Group"
+                       value = {groupChatName} 
+                       style={{ border: '1px solid #000' }}
+                       onChange = {(e) => setGroupChatName(e.target.value)}/>
+                          <Button colorScheme = "teal" ml={2} onClick = {handleRename}
+                          style={{ border: '1px solid #000' }}
+                          fontFamily = "Trebuchet MS" >
                           Rename
                           </Button>
                        </FormControl> 
 
                        <FormControl mt={4}>
-                          <Input placeholder = "Add new user"  value = {search} onChange = {(e) => handleSearch(e.target.value)}/>
+                          <Input placeholder = "Add New User"  
+                          style={{ border: '1px solid #000' }}
+                          value = {search} onChange = {(e) => handleSearch(e.target.value)}/>
                        </FormControl>
 
                        {loading ? (
@@ -256,10 +263,10 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                        )}
                     </ModalBody>
                     <ModalFooter>
-                         <Button onClick={() => handleLeave(user)} colorScheme="red" mr={3}>
+                         <Button style={{ border: '1px solid #000' }} onClick={() => handleLeave(user)} fontFamily = "Trebuchet MS" colorScheme="red" mr={3}>
                             {selectedChat.groupAdmin._id === user._id ? "Delete Group" : "Leave Group"}
                         </Button>
-                        <Button colorScheme = "blue" mr = {1} onClick = {onClose}>Close</Button>
+                        <Button style={{ border: '1px solid #000' }} fontFamily = "Trebuchet MS" colorScheme = "orange" mr = {1} onClick = {onClose}>Close</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

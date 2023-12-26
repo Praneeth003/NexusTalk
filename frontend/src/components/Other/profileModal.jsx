@@ -9,7 +9,7 @@ import {
   ModalCloseButton,
   useDisclosure, Button, IconButton, Center
 } from '@chakra-ui/react';
-import { ViewIcon } from '@chakra-ui/icons';
+import { InfoIcon } from '@chakra-ui/icons';
 
 function ProfileModal({user, children}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -17,7 +17,7 @@ function ProfileModal({user, children}) {
     <>
     {/* If children are passed, then the modal will be opened by clicking on the children. Otherwise, the modal will be opened by clicking on the icon. */}
     {
-        children ? (<span onClick={onOpen}>{children}</span>) : (<IconButton d ={{base: "flex"}} icon ={<ViewIcon/>} onClick={onOpen}/>)
+        children ? (<span onClick={onOpen}>{children}</span>) : (<IconButton d ={{base: "flex"}} icon ={<InfoIcon/>} onClick={onOpen}/>)
     }
         <Modal isOpen={isOpen} onClose={onClose} size = "xl">
             <ModalOverlay />
