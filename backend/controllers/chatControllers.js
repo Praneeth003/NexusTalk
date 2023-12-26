@@ -59,12 +59,12 @@ const fetchChats = asyncHandler(async(req,res) =>{
 const createGroupChat = asyncHandler(async(req,res) =>{
     if(!req.body.users || !req.body.name){
         console.log("Users and name params are required");
-        return res.sendStatus(400).send({message: "Users and group name are required"});
+        return res.status(400).send({message: "Users and group name are required"});
     }
     var users = JSON.parse(req.body.users);
-    if(users.length < 2){
-        console.log("Group chat must have atleast 2 users");
-        return res.sendStatus(400).send({message: "Group chat must have atleast 2 users"});
+    if(users.length < 3){
+        console.log("Group chat must have atleast 3 users");
+        return res.status(400).send({message: "Group chat must have atleast 2 users"});
     }
     // Add the logged in user as well to the group
     users.push(req.user._id);
@@ -134,7 +134,7 @@ const addUserToGroup = asyncHandler(async(req,res) =>{
 const removeUserFromGroup = asyncHandler(async(req,res) =>{
     if(!req.body.chatId || !req.body.userId){
         console.log("ChatId and userId params are required");
-        res.sendStatus(400).send({message: "ChatId and userId params are required"});
+        res.status(400).send({message: "ChatId and userId params are required"});
     }
     else{
         try{
@@ -143,10 +143,15 @@ const removeUserFromGroup = asyncHandler(async(req,res) =>{
                 console.log("Only the group admin can remove users from the group");
                 return res.status(400).send({message: "Only the group admin can remove users from the group"});
             }
-            // if(chat.users.length < 3){
-            //     console.log("Group chat must have atleast 2 users");
-            //     return res.status(400).send({message: "Group chat must have atleast 2 users"});
-            // }
+            if(chat.groupAdmin.toString() === req.body.userId.toString()){
+                console.log("Group admin cannot be removed from the group");
+                return res.status(400).send({message: "Group admin cannot be removed from the group"});
+            }
+
+            if(chat.users.length < 2){
+                console.log("Group chat must have atleast 2 users");
+                return res.status(400).send({message: "Group chat must have atleast 2 users"});
+            }
             const user = await User.findOne({_id: req.body.userId});
             if(!user){
                 console.log("User not found");
@@ -161,12 +166,43 @@ const removeUserFromGroup = asyncHandler(async(req,res) =>{
             const fullChat = await Chat.findOne({_id: req.body.chatId}).populate("users", "-password").populate("latestMessage").populate("groupAdmin", "-password");
             return res.status(200).send(fullChat);
         }catch(error){
-            res.status(400);
-            res.send(error.message);
+            res.status(500).send(error.message);
         }
     }
 });
 
+const leaveGroup = asyncHandler(async(req,res) =>{
+    if(!req.body.chatId){
+        console.log("ChatId param is required");
+        res.status(400).send({message: "ChatId param is required"});
+    }
+    else{
+        try{
+            const chat = await Chat.findOne({_id: req.body.chatId});
+            if(chat.groupAdmin.toString() === req.user._id.toString()){
+                console.log("Group admin cannot leave the group");
+                return res.status(400).send({message: "Group admin cannot leave the group"});
+            }
+            if(chat.users.length < 3){
+                console.log("Group chat must have atleast 2 users");
+                return res.status(400).send({message: "Group chat must have atleast 2 users"});
+            }
+            if(!chat.users.includes(req.user._id)){
+                console.log("User is not present in the group");
+                return res.status(400).send({message: "User is not present in the group"});
+            }
+            chat.users = chat.users.filter((id) => id.toString() !== req.user._id.toString());
+            await chat.save();
+            const fullChat = await Chat.findOne({_id: req.body.chatId}).populate("users", "-password").populate("latestMessage").populate("groupAdmin", "-password");
+            return res.status(200).send(fullChat);
+        }catch(error){
+            res.status(400);
+            res.send(error.message);
+        }
+    }
+}
+);
 
 
-export {accessChat, fetchChats, createGroupChat, renameGroupChat, addUserToGroup, removeUserFromGroup};
+
+export {accessChat, fetchChats, createGroupChat, renameGroupChat, addUserToGroup, removeUserFromGroup, leaveGroup};

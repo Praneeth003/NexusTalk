@@ -21,7 +21,7 @@ import UserListItem from './UserListItem.jsx';
 import UserBadge from './UserBadge.jsx';
 
 const GroupChatModal = ({children}) => {
-  // Add your component logic here
+
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [groupName, setGroupName] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -45,7 +45,6 @@ const GroupChatModal = ({children}) => {
             },
             };
             const {data} = await axios.get(`/api/user?search=${search}`, config);
-            console.log(data);
             setLoading(false);
             setSearchResults(data);
     }catch(error){
@@ -101,7 +100,6 @@ const GroupChatModal = ({children}) => {
         };
         
     const handleDelete = (i) => {
-  
         setSelectedUsers(selectedUsers.filter((user) => user._id !== i._id));
     };
 
@@ -141,7 +139,7 @@ const GroupChatModal = ({children}) => {
             justifyContent = 'center'
             alignItems = 'center'
           >
-          <FormControl pb={3}>
+          <FormControl pb={2}>
           <Input placeholder="Group Name" value={groupName} onChange={(e) => setGroupName(e.target.value)} />  
           </FormControl>
 
@@ -158,7 +156,7 @@ const GroupChatModal = ({children}) => {
               // <ChatLoading />
               <div>Loading...</div>
             ) : (
-              searchResults?.map((i) => (
+              searchResults?.filter(i => i._id !== user._id).map((i) => (
                   <UserListItem
                     key={i._id}
                     i={i}
