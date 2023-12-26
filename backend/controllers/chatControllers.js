@@ -62,8 +62,8 @@ const createGroupChat = asyncHandler(async(req,res) =>{
         return res.status(400).send({message: "Users and group name are required"});
     }
     var users = JSON.parse(req.body.users);
-    if(users.length < 3){
-        console.log("Group chat must have atleast 3 users");
+    if(users.length < 2){
+        console.log("Group chat must have atleast 2 users");
         return res.status(400).send({message: "Group chat must have atleast 2 users"});
     }
     // Add the logged in user as well to the group
@@ -148,7 +148,7 @@ const removeUserFromGroup = asyncHandler(async(req,res) =>{
                 return res.status(400).send({message: "Group admin cannot be removed from the group"});
             }
 
-            if(chat.users.length < 2){
+            if(chat.users.length < 3){
                 console.log("Group chat must have atleast 2 users");
                 return res.status(400).send({message: "Group chat must have atleast 2 users"});
             }
@@ -180,13 +180,14 @@ const leaveGroup = asyncHandler(async(req,res) =>{
         try{
             const chat = await Chat.findOne({_id: req.body.chatId});
             if(chat.groupAdmin.toString() === req.user._id.toString()){
-                console.log("Group admin cannot leave the group");
-                return res.status(400).send({message: "Group admin cannot leave the group"});
+                await Chat.deleteOne({_id: req.body.chatId});
+                return res.status(200).send({message: "Group has been deleted"});
+
             }
-            if(chat.users.length < 3){
-                console.log("Group chat must have atleast 2 users");
-                return res.status(400).send({message: "Group chat must have atleast 2 users"});
-            }
+            // if(chat.users.length < 3){
+            //     console.log("Group chat must have atleast 2 users");
+            //     return res.status(400).send({message: "Group chat must have atleast 2 users"});
+            // }
             if(!chat.users.includes(req.user._id)){
                 console.log("User is not present in the group");
                 return res.status(400).send({message: "User is not present in the group"});

@@ -103,9 +103,10 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
             });
         }
         catch(error){
+            console.log(error);
             toast({
                 title: 'Something went wrong',
-                description: 'Unable to remove user',
+                description: `${error.response.data.message}`,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
@@ -117,16 +118,6 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
     };
 
     const handleLeave = async (u) => {
-        if(selectedChat.groupAdmin._id === user._id){
-            toast({
-                title: 'Admin cannot leave the group',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-            return;
-        }
         try{
             const config = {
                 headers: {
@@ -140,14 +131,14 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
             toast({
                 title: 'Left group',
                 status: 'success',
-                duration: 3000,
+                duration: 6000,
                 isClosable: true,
                 position: 'bottom-left',
             });
         }catch(error){
             toast({
                 title: 'Something went wrong',
-                description: 'Unable to leave group',
+                description: '{error.message}',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
@@ -266,7 +257,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                     </ModalBody>
                     <ModalFooter>
                          <Button onClick={() => handleLeave(user)} colorScheme="red" mr={3}>
-                            Leave Group
+                            {selectedChat.groupAdmin._id === user._id ? "Delete Group" : "Leave Group"}
                         </Button>
                         <Button colorScheme = "blue" mr = {1} onClick = {onClose}>Close</Button>
                     </ModalFooter>
