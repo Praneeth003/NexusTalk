@@ -3,7 +3,7 @@
 This is a real-time chat application built using the MERN stack (MongoDB, Express.js, React.js, Node.js) along with Socket.IO for real-time communication.
 
 ## Deployment:
-- **This application has been deployed on Render cloud at: https://nexustalk.onrender.com
+- This application has been deployed on Render cloud at: https://nexustalk.onrender.com
 
 ## Features
 - **Real-time Chat:** Instant messaging between users in real-time.
