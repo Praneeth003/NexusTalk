@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import UserListItem from './UserListItem';
 import { set } from 'mongoose';
+import { Text } from '@chakra-ui/react';
 
 
 function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
@@ -228,6 +229,9 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                     <ModalHeader fontFamily = "Trebuchet MS" >{selectedChat.chatName}</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
+                        <Text fontFamily = "Trebuchet MS" fontSize = "20px">Group Admin:</Text>
+                        <UserBadge u = {selectedChat.groupAdmin}/>
+                        <Text fontFamily = "Trebuchet MS" fontSize = "20px">Group Members:</Text>
                        <Box>
                         {selectedChat.users.map((u) => (
                             <UserBadge u = {u} key = {u._id} handleFunction={() => handleRemove(u)}/>
@@ -240,6 +244,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                        style={{ border: '1px solid #000' }}
                        onChange = {(e) => setGroupChatName(e.target.value)}/>
                           <Button colorScheme = "teal" ml={2} onClick = {handleRename}
+                          variant="outline"
                           style={{ border: '1px solid #000' }}
                           fontFamily = "Trebuchet MS" >
                           Rename
@@ -263,10 +268,10 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                        )}
                     </ModalBody>
                     <ModalFooter>
-                         <Button style={{ border: '1px solid #000' }} onClick={() => handleLeave(user)} fontFamily = "Trebuchet MS" colorScheme="red" mr={3}>
+                         <Button style={{ border: '1px solid #000' }} variant = "outline" onClick={() => handleLeave(user)} fontFamily = "Trebuchet MS" colorScheme="red" mr={3}>
                             {selectedChat.groupAdmin._id === user._id ? "Delete Group" : "Leave Group"}
                         </Button>
-                        <Button style={{ border: '1px solid #000' }} fontFamily = "Trebuchet MS" colorScheme = "orange" mr = {1} onClick = {onClose}>Close</Button>
+                        <Button style={{ border: '1px solid #000' }} variant = 'outline' fontFamily = "Trebuchet MS" colorScheme = "yellow" mr = {1} onClick = {onClose}>Close</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

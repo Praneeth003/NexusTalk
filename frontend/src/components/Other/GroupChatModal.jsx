@@ -115,7 +115,9 @@ const GroupChatModal = ({children}) => {
             });
           return;
         }
+        else{
         setSelectedUsers([...selectedUsers, i]);
+        }
         console.log(selectedUsers);
     };
 
@@ -168,7 +170,7 @@ const GroupChatModal = ({children}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='teal' mr={3} onClick={handleSubmit} fontFamily="Trebuchet MS" >
+            <Button colorScheme='teal' mr={3} onClick={handleSubmit} variant = 'outline' fontFamily="Trebuchet MS" size = 'lg' >
                 Create
             </Button>
           </ModalFooter>

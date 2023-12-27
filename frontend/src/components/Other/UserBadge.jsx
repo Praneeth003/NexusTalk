@@ -13,8 +13,8 @@ const UserBadge = ({u,handleFunction}) => {
       mb={2}
       fontSize={12}
       fontFamily={'Trebuchet MS'}
-      variant="solid"
-      colorScheme="green"
+      variant="outline"
+      colorScheme="purple"
       cursor="pointer"
       
       onClick={handleFunction}

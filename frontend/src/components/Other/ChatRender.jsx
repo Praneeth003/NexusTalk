@@ -135,7 +135,7 @@ const ChatRender = ({fetchAgain, setFetchAgain}) => {
           <Box
           position="relative"
           p={3}
-          bg="#F8F8F8"
+          bg="white"
           w="100%"
           h="72vh"
           borderRadius="lg"

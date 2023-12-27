@@ -26,8 +26,9 @@ const ScrollableChat = ({messages}) => {
             )}
             <span
               style={{
-                backgroundColor: "white", 
+                backgroundColor: "#DDE6ED", 
                 fontFamily: "Trebuchet MS",
+                color: "black",
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
                 borderRadius: "20px",
