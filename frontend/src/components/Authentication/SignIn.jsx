@@ -39,6 +39,7 @@ function SignIn(){
                 position: "bottom",
                 isClosabale: true 
             });
+            return;
         }
         else{
         try{
@@ -63,7 +64,7 @@ function SignIn(){
             console.log(error);
             toast({
                 title: "Error Occured",
-                description: `${error.response.data}`,
+                description: `${error.response && error.response.data.message ? error.response.data.message : error.message}`,
                 status: "error",
                 duration: 3000,
                 isClosable: true,

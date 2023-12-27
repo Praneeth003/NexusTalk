@@ -14,11 +14,15 @@ dotenv.config();
 connectDB();
 const app = express();
 
+//Middleware to enable CORS
+app.use(cors());
 
 //Middleware to parse incoming JSON data
 app.use(express.json());
 
-app.use(cors());
+
+
+
 
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
@@ -34,11 +38,11 @@ if (process.env.NODE_ENV === 'production') {
     }
     );
 }
-else{
-    app.get('/', (req, res) => {
-        res.send('API is running...');
-    });
-}
+// else{
+//     app.get('/', (req, res) => {
+//         res.send('API is running...');
+//     });
+// }
 
 
 app.use(notFound);
