@@ -122,7 +122,7 @@ const SideDrawer = () => {
     <div>
     <Menu>
       <MenuButton>
-        <BellIcon fontSize = "2xl"  color={notification.length != 0 ? "red" : "black"}/>
+        <BellIcon fontSize = "2xl"  color={notification.length !== 0 ? "red" : "black"}/>
       </MenuButton>
       <MenuList fontFamily="Trebuchet MS">
           {!notification.length && 
