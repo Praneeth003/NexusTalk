@@ -19,6 +19,7 @@ import {Input} from '@chakra-ui/react';
 import axios from 'axios';
 import UserListItem from './UserListItem.jsx';
 import UserBadge from './UserBadge.jsx';
+import { set } from 'mongoose';
 
 const GroupChatModal = ({children}) => {
 
@@ -105,6 +106,7 @@ const GroupChatModal = ({children}) => {
 
     const handleSelect = (i) => {
         console.log(selectedUsers);
+        setSearch('');
         if(selectedUsers.includes(i)){
             toast({
                 title: 'User already selected',

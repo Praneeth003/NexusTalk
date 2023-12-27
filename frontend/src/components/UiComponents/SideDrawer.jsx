@@ -16,6 +16,7 @@ import {
   DrawerContent,
 } from '@chakra-ui/react';
 import { getSender } from '../../logic';
+import { set } from 'mongoose';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState('');
@@ -28,39 +29,32 @@ const SideDrawer = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const handleSearch = async() => {
-    if(!search){
-      toast({
-        title: "Please enter a name or an email",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-        position: "top-left"
-      });
-      return;
+   const handleSearch =  async (val) => {
+    setSearch(val);
+    if(!val){
+        return;
     }
     try{
-      setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
-      setLoading(false);
-      setSearchResult(data);
+        setLoading(true);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+            };
+            const {data} = await axios.get(`/api/user?search=${search}`, config);
+            setLoading(false);
+            setSearchResult(data);
     }catch(error){
-      toast({
-        title: "Something went wrong",
-        description: "Failed to search users",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "top-left"
-      });
+        toast({
+            title: 'Something went wrong',
+            description: 'Unable to search',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+            position: 'bottom-left',
+        });
     }
-  };
+    };
 
   const logoutHandler = () => {
     // Perform logout logic here
@@ -70,6 +64,7 @@ const SideDrawer = () => {
 
   const accessChat = async (userId) => {
     console.log(userId);
+    setSearch('');
     
     try{
       setLoadingChat(true);
@@ -97,7 +92,7 @@ const SideDrawer = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
-        position: "top-left"
+        position: "bottom-left"
       });
   }}
 
@@ -166,13 +161,13 @@ const SideDrawer = () => {
     <Input 
     placeholder="Search by Name or Email" 
     value={search} 
-    onChange={(event) => setSearch(event.target.value)} 
+    onChange={(event) => handleSearch(event.target.value)} 
     borderWidth="1px" 
     borderColor="black"
     />
-    <Button  mt={1} ml={185} onClick={handleSearch} borderWidth="1px" borderColor="black" fontFamily="Trebuchet MS">
+    {/* <Button  mt={1} ml={185} onClick={handleSearch} borderWidth="1px" borderColor="black" fontFamily="Trebuchet MS">
     Search
-    </Button>
+    </Button> */}
     </Box>
 
     {loading ? 
