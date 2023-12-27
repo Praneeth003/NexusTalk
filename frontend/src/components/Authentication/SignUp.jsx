@@ -159,7 +159,7 @@ function SignUp(){
                 </FormControl>
             
 
-            <Button colorScheme = 'teal' width = "100%" onClick = {onSubmit} mt = {5} >
+            <Button colorScheme = 'blue' variant = 'outline' width = "100%" onClick = {onSubmit} mt = {5} >
             Sign Up
             </Button>
 

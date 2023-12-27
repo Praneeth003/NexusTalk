@@ -94,7 +94,7 @@ function SignIn(){
                     </InputGroup>
             </FormControl>
 
-            <Button colorScheme = 'teal' width = "100%" onClick = {onSubmit} mt = {5} >
+            <Button colorScheme = 'blue' width = "100%" variant = 'outline' onClick = {onSubmit} mt = {5} >
             Sign In
             </Button>
 
