@@ -4,11 +4,11 @@ import { ViewIcon } from '@chakra-ui/icons';
 import { useDisclosure } from '@chakra-ui/react';
 import { IconButton } from '@chakra-ui/react';
 import UserBadge from './UserBadge';
+import UserListItem from './UserListItem';
 import { ChatState } from '../../Context/ChatProvider';
 import { Box, Input } from '@chakra-ui/react';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
-import UserListItem from './UserListItem';
 import { set } from 'mongoose';
 import { Text } from '@chakra-ui/react';
 
@@ -230,7 +230,7 @@ function UpdateGroupChatModal({fetchAgain, setFetchAgain, fetchMessages}){
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text fontFamily = "Trebuchet MS" fontSize = "20px">Group Admin:</Text>
-                        <UserBadge u = {selectedChat.groupAdmin}/>
+                        <UserListItem i = {selectedChat.groupAdmin} handleFunction={() => {}} />
                         <Text fontFamily = "Trebuchet MS" fontSize = "20px">Group Members:</Text>
                        <Box>
                         {selectedChat.users.map((u) => (
