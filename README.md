@@ -13,7 +13,7 @@ This is a real-time chat application built using the MERN stack (MongoDB, Expres
 - **Notifications:** Inform users of new messages.
 
 ## Technology
-- **MongoDB:** NoSQL database to store chat data.
+- **MongoDB:** NoSQL database to store chat and user data.
 - **Express.js:** Backend framework for handling server-side logic.
 - **React.js:** Frontend framework for building the user interface.
 - **Node.js:** Server-side JavaScript runtime environment.
