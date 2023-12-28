@@ -47,7 +47,7 @@ This is a real-time chat application built using the MERN stack (MongoDB, Expres
     ```
 
 ## Usage
-- Register for an account or log in with guest credentials: (guest01@gmail.com & Qwerty@123) or (guest02@gmail.com & Asdf@123).
+- Register for an account or log in with guest credentials: (ironman@gmail.com & Ironman@123) or (hulk@gmail.com & Hulk@123).
 - Start chatting with other users personally, in a group, or create a new group.
 
 ## Contributing
