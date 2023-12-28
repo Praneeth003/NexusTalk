@@ -22,11 +22,11 @@ function ProfileModal({user, children}) {
         <Modal isOpen={isOpen} onClose={onClose} size = "xl">
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader align="center" fontSize="25px">{user.name}</ModalHeader>
+            <ModalHeader align="center" fontFamily='Trebuchet MS' fontSize="25px">{user.name}</ModalHeader>
             <ModalCloseButton />
             <ModalBody align="center" justify="center" >
             <img src = {user.profilepic} alt = "" style = {{width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover"}}/>
-            <p style = {{fontSize : "20px", margin : "5px"}}>{user.email}</p>
+            <p style = {{fontSize : "20px", margin : "5px", fontFamily: 'Trebuchet MS'}}>{user.email}</p>
             </ModalBody>
     
             <ModalFooter>
