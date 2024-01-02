@@ -3,7 +3,7 @@
 This is a real-time chat application built using the MERN stack (MongoDB, Express.js, React.js, Node.js) along with Socket.IO for real-time communication.
 
 ## Deployment:
-- This application has been deployed on Render cloud at: https://nexustalk.onrender.com
+- This application has been deployed on Render cloud at: [NexusTalk App](https://nexustalk.onrender.com)
 
 ## Features
 - **Real-time Chat:** Instant messaging between users in real-time.
@@ -31,10 +31,20 @@ This is a real-time chat application built using the MERN stack (MongoDB, Expres
     # At the root directory
     npm install
     
-    # Navigate to the frontend directory
-    cd frontend
-    npm install
+    # Create a .env file in the root directory
+    touch .env
     ```
+    
+    Create a `.env` file in the root directory and add the following configurations:
+    
+    ```plaintext
+    PORT=YourRequiredPortNumber
+    JWT_SECRET=YourOwnSecretKey
+    MONGO_URI=mongodb+srv://chkpraneeth:WbNosVQ4rrv6QRW2@cluster0.zv6yddj.mongodb.net/?retryWrites=true&w=majority
+    NODE_ENV=production
+    ```
+    
+    Replace `YourRequiredPortNumber` with the desired port number, and `YourOwnSecretKey` with your own secret key for JWT encryption/authentication.
 
 3. Start the Application:
     ```bash
@@ -60,11 +70,3 @@ Contributions are welcome! Please follow these steps:
 
 ## Contact
 For any inquiries or support, feel free to contact us at ch.krishnapraneeth@gmail.com.
-
-
-
-
-
-
-
-
