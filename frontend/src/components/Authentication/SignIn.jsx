@@ -3,7 +3,7 @@ import {FormControl, FormLabel, Input, Button, InputRightElement, InputGroup, us
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 function SignIn(){
     const [state, setState] = useState({

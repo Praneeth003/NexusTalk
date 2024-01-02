@@ -3,7 +3,7 @@ import {FormControl, FormLabel, vStack, Input, InputRightElement, InputGroup, Bu
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 function SignUp(){
     const [state, setState] = useState({

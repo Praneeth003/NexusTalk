@@ -6,7 +6,7 @@ import MyChats from "../UiComponents/MyChats";
 import ChatBox from "../UiComponents/ChatBox";
 import { Box } from "@chakra-ui/react";
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 function Chat(){
     const {user} = ChatState();
